@@ -86,6 +86,10 @@
       cursor: pointer;
     }
 
+    button:hover {
+      opacity: 0.88;
+    }
+
     .primary {
       background: #222;
       color: white;
@@ -102,35 +106,25 @@
     }
 
     .danger {
-      background: #ffe5e5;
-      color: #a40000;
+      background: #b42318;
+      color: white;
     }
 
-    button:hover {
-      opacity: 0.88;
+    .danger-zone {
+      border: 2px solid #ffd4d0;
     }
 
-    .team-list {
+    .team-list,
+    .answer-list {
       margin-top: 15px;
       display: grid;
       gap: 8px;
     }
 
-    .team-item {
-      padding: 10px 12px;
-      background: #f7f7f7;
-      border-radius: 8px;
-    }
-
-    .answer-list {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
+    .team-item,
     .answer-item {
-      background: #f7f7f7;
       padding: 10px 12px;
+      background: #f7f7f7;
       border-radius: 8px;
     }
 
@@ -156,7 +150,7 @@
   <h1>SCM QUIZ 運営画面</h1>
 
   <div class="subtitle">
-    クイズ進行・回答状況確認
+    参加状況・クイズ進行管理
   </div>
 
 
@@ -172,12 +166,13 @@
   </div>
 
 
-  <!-- 数字 -->
+  <!-- 集計 -->
   <div class="card">
 
     <div class="stats">
 
       <div class="stat">
+
         <div class="stat-label">
           参加チーム
         </div>
@@ -185,10 +180,12 @@
         <div id="teamCount" class="stat-number">
           0
         </div>
+
       </div>
 
 
       <div class="stat">
+
         <div class="stat-label">
           現在の問題 回答済み
         </div>
@@ -196,6 +193,7 @@
         <div id="answerCount" class="stat-number">
           0
         </div>
+
       </div>
 
     </div>
@@ -203,10 +201,10 @@
   </div>
 
 
-  <!-- 操作 -->
+  <!-- クイズ操作 -->
   <div class="card">
 
-    <h2>進行操作</h2>
+    <h2>クイズ操作</h2>
 
     <div class="button-grid">
 
@@ -240,8 +238,8 @@
     </div>
 
     <p class="notice">
-      ※現在は動作確認用として「練習問題」と「Q1」まで実装しています。
-      動作確認後、Q2〜Q10・ランキング・最終発表を追加します。
+      現在は動作確認のため、練習問題とQ1まで操作できます。
+      動作確認後にQ2〜Q10、中間ランキング、最終ランキングを追加します。
     </p>
 
   </div>
@@ -262,11 +260,34 @@
   <!-- チーム -->
   <div class="card">
 
-    <h2>参加チーム</h2>
+    <h2>参加チーム一覧</h2>
 
     <div id="teamList" class="team-list">
       まだ参加チームはありません
     </div>
+
+  </div>
+
+
+  <!-- リセット -->
+  <div class="card danger-zone">
+
+    <h2>テスト用リセット</h2>
+
+    <p>
+      参加チーム・回答・得点・現在の進行状態を
+      すべて削除します。
+    </p>
+
+    <button
+      id="resetButton"
+      class="danger">
+      テストデータを全削除
+    </button>
+
+    <p class="notice">
+      ※本番開始後は押さないでください。
+    </p>
 
   </div>
 
@@ -286,10 +307,10 @@ import {
   ref,
   onValue,
   set,
+  remove,
   serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
-
 
 
 const firebaseConfig = {
@@ -317,11 +338,11 @@ const firebaseConfig = {
 };
 
 
+const app =
+  initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-
-const database = getDatabase(app);
-
+const database =
+  getDatabase(app);
 
 
 /* =========================
@@ -343,7 +364,6 @@ const teamList =
 const answerList =
   document.getElementById("answerList");
 
-
 const waitingButton =
   document.getElementById("waitingButton");
 
@@ -356,12 +376,13 @@ const resultButton =
 const q1Button =
   document.getElementById("q1Button");
 
+const resetButton =
+  document.getElementById("resetButton");
 
 
 let currentQuestion = null;
 
-let teams = {};
-
+let unsubscribeAnswers = null;
 
 
 /* =========================
@@ -372,7 +393,8 @@ onValue(
   ref(database, "teams"),
   snapshot => {
 
-    teams = snapshot.val() || {};
+    const teams =
+      snapshot.val() || {};
 
     const teamArray =
       Object.entries(teams);
@@ -391,32 +413,32 @@ onValue(
         "まだ参加チームはありません";
 
       return;
-
     }
 
 
-    teamArray.forEach(([id, team], index) => {
+    teamArray.forEach(
+      ([id, team], index) => {
 
-      const div =
-        document.createElement("div");
+        const div =
+          document.createElement("div");
 
-      div.className =
-        "team-item";
+        div.className =
+          "team-item";
 
-      div.textContent =
-        `${index + 1}. ${team.name}`;
+        div.textContent =
+          `${index + 1}. ${team.name}`;
 
-      teamList.appendChild(div);
+        teamList.appendChild(div);
 
-    });
+      }
+    );
 
   }
 );
 
 
-
 /* =========================
-   GAME STATUS
+   GAME
 ========================= */
 
 onValue(
@@ -437,7 +459,6 @@ onValue(
       watchAnswers(null);
 
       return;
-
     }
 
 
@@ -453,17 +474,18 @@ onValue(
       watchAnswers(null);
 
       return;
-
     }
 
 
-    if (game.phase === "question") {
-
-      const label =
-        currentQuestion === "practice"
+    const label =
+      currentQuestion === "practice"
         ? "練習問題"
-        : currentQuestion?.toUpperCase();
+        : currentQuestion
+          ? currentQuestion.toUpperCase()
+          : "";
 
+
+    if (game.phase === "question") {
 
       gameStatus.textContent =
         `${label} 出題中`;
@@ -471,17 +493,10 @@ onValue(
       watchAnswers(currentQuestion);
 
       return;
-
     }
 
 
     if (game.phase === "result") {
-
-      const label =
-        currentQuestion === "practice"
-        ? "練習問題"
-        : currentQuestion?.toUpperCase();
-
 
       gameStatus.textContent =
         `${label} 正解発表中`;
@@ -494,13 +509,9 @@ onValue(
 );
 
 
-
 /* =========================
    ANSWERS
 ========================= */
-
-let unsubscribeAnswers = null;
-
 
 function watchAnswers(questionKey) {
 
@@ -521,7 +532,6 @@ function watchAnswers(questionKey) {
       "まだ回答はありません";
 
     return;
-
   }
 
 
@@ -536,7 +546,6 @@ function watchAnswers(questionKey) {
 
         const answers =
           snapshot.val() || {};
-
 
         const answerArray =
           Object.values(answers);
@@ -555,7 +564,6 @@ function watchAnswers(questionKey) {
             "まだ回答はありません";
 
           return;
-
         }
 
 
@@ -563,33 +571,33 @@ function watchAnswers(questionKey) {
           ["A", "B", "C", "D"];
 
 
-        answerArray.forEach(answer => {
+        answerArray.forEach(
+          answer => {
 
-          const div =
-            document.createElement("div");
+            const div =
+              document.createElement("div");
 
-          div.className =
-            "answer-item";
-
-
-          const letter =
-            letters[answer.choice]
-            ?? "-";
+            div.className =
+              "answer-item";
 
 
-          div.textContent =
-            `${answer.teamName}：${letter}`;
+            const letter =
+              letters[answer.choice] ?? "-";
 
 
-          answerList.appendChild(div);
+            div.textContent =
+              `${answer.teamName}：${letter}`;
 
-        });
+
+            answerList.appendChild(div);
+
+          }
+        );
 
       }
     );
 
 }
-
 
 
 /* =========================
@@ -604,7 +612,6 @@ waitingButton.addEventListener(
       confirm(
         "参加者の画面を待機状態に戻しますか？"
       );
-
 
     if (!ok) return;
 
@@ -627,9 +634,8 @@ waitingButton.addEventListener(
 );
 
 
-
 /* =========================
-   PRACTICE START
+   PRACTICE
 ========================= */
 
 practiceButton.addEventListener(
@@ -640,7 +646,6 @@ practiceButton.addEventListener(
       confirm(
         "練習問題を開始しますか？"
       );
-
 
     if (!ok) return;
 
@@ -664,7 +669,6 @@ practiceButton.addEventListener(
 );
 
 
-
 /* =========================
    RESULT
 ========================= */
@@ -680,7 +684,6 @@ resultButton.addEventListener(
       );
 
       return;
-
     }
 
 
@@ -688,7 +691,6 @@ resultButton.addEventListener(
       confirm(
         "正解を発表しますか？"
       );
-
 
     if (!ok) return;
 
@@ -712,9 +714,8 @@ resultButton.addEventListener(
 );
 
 
-
 /* =========================
-   Q1 START
+   Q1
 ========================= */
 
 q1Button.addEventListener(
@@ -725,7 +726,6 @@ q1Button.addEventListener(
       confirm(
         "Q1を開始しますか？"
       );
-
 
     if (!ok) return;
 
@@ -744,6 +744,104 @@ q1Button.addEventListener(
 
       }
     );
+
+  }
+);
+
+
+/* =========================
+   RESET
+========================= */
+
+resetButton.addEventListener(
+  "click",
+  async () => {
+
+    const input =
+      prompt(
+        "全テストデータを削除します。\n\n削除する場合は RESET と入力してください。"
+      );
+
+
+    if (input !== "RESET") {
+
+      alert(
+        "削除をキャンセルしました。"
+      );
+
+      return;
+    }
+
+
+    const finalCheck =
+      confirm(
+        "本当に削除しますか？\n\n参加チーム・回答・得点がすべて削除されます。"
+      );
+
+
+    if (!finalCheck) return;
+
+
+    resetButton.disabled = true;
+
+    resetButton.textContent =
+      "削除中...";
+
+
+    try {
+
+      await Promise.all([
+
+        remove(
+          ref(database, "teams")
+        ),
+
+        remove(
+          ref(database, "answers")
+        ),
+
+        remove(
+          ref(database, "scores")
+        )
+
+      ]);
+
+
+      await set(
+        ref(database, "game"),
+        {
+
+          phase: "waiting",
+
+          currentQuestion: null,
+
+          updatedAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      alert(
+        "テストデータを削除しました！"
+      );
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "削除に失敗しました。"
+      );
+
+    }
+
+
+    resetButton.disabled = false;
+
+    resetButton.textContent =
+      "テストデータを全削除";
 
   }
 );
