@@ -22,15 +22,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 24px;
+      padding: 20px;
     }
 
     .card {
       width: 100%;
-      max-width: 500px;
+      max-width: 520px;
       background: white;
       border-radius: 24px;
-      padding: 40px 24px;
+      padding: 36px 24px;
       text-align: center;
       box-shadow: 0 10px 35px rgba(0,0,0,0.10);
     }
@@ -62,41 +62,150 @@
     }
 
     button {
+      cursor: pointer;
+    }
+
+    .main-button {
       width: 100%;
       padding: 16px;
       border: none;
       border-radius: 12px;
       font-size: 18px;
       font-weight: bold;
-      cursor: pointer;
       background: #222;
       color: white;
     }
 
-    button:hover {
+    .main-button:hover {
       opacity: 0.85;
     }
 
-    #waitingScreen {
+    #waitingScreen,
+    #quizScreen,
+    #answeredScreen {
       display: none;
     }
 
     .team-name {
       font-size: 28px;
       font-weight: bold;
-      margin: 24px 0;
+      margin: 20px 0;
     }
 
-    .waiting {
+    .waiting-text {
       color: #666;
       line-height: 1.8;
+      margin-bottom: 28px;
     }
+
+    /* クイズ画面 */
+
+    .quiz-card {
+      padding-top: 24px;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .question-number {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .timer {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #222;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .question {
+      font-size: 24px;
+      line-height: 1.5;
+      font-weight: bold;
+      margin: 20px 0 30px;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .answer {
+      min-height: 100px;
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 14px;
+    }
+
+    .answer-a {
+      background: #d83b3b;
+    }
+
+    .answer-b {
+      background: #2878c8;
+    }
+
+    .answer-c {
+      background: #d49b16;
+    }
+
+    .answer-d {
+      background: #32965d;
+    }
+
+    .answer:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .answer-letter {
+      display: block;
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    /* 回答完了 */
+
+    .check {
+      font-size: 60px;
+      margin-bottom: 10px;
+    }
+
+    .selected-answer {
+      margin-top: 24px;
+      padding: 16px;
+      background: #f4f5f7;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .small-text {
+      color: #777;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
   </style>
 </head>
 
 <body>
 
-  <!-- チーム名入力画面 -->
+  <!-- ① チーム名入力 -->
   <div class="screen" id="joinScreen">
     <div class="card">
 
@@ -117,7 +226,10 @@
         maxlength="20"
       >
 
-      <button onclick="joinQuiz()">
+      <button
+        class="main-button"
+        onclick="joinQuiz()"
+      >
         クイズに参加する
       </button>
 
@@ -125,7 +237,7 @@
   </div>
 
 
-  <!-- 待機画面 -->
+  <!-- ② 待機画面 -->
   <div class="screen" id="waitingScreen">
     <div class="card">
 
@@ -133,13 +245,113 @@
 
       <div
         class="team-name"
-        id="displayTeamName">
-      </div>
+        id="displayTeamName"
+      ></div>
 
       <h2>参加完了！</h2>
 
-      <p class="waiting">
+      <p class="waiting-text">
         クイズ開始まで<br>
+        そのままお待ちください。
+      </p>
+
+      <!-- 今はテスト用 -->
+      <button
+        class="main-button"
+        onclick="startQuiz()"
+      >
+        テスト問題を開始
+      </button>
+
+      <p class="small-text">
+        ※現在は動作確認用です
+      </p>
+
+    </div>
+  </div>
+
+
+  <!-- ③ クイズ画面 -->
+  <div class="screen" id="quizScreen">
+    <div class="card quiz-card">
+
+      <div class="quiz-header">
+
+        <div class="question-number">
+          Q1
+        </div>
+
+        <div class="timer" id="timer">
+          45
+        </div>
+
+      </div>
+
+      <div class="question">
+        SCM QUIZの制限時間は？
+      </div>
+
+      <div class="answers">
+
+        <button
+          class="answer answer-a"
+          onclick="selectAnswer('A', '15秒')"
+        >
+          <span class="answer-letter">A</span>
+          15秒
+        </button>
+
+        <button
+          class="answer answer-b"
+          onclick="selectAnswer('B', '30秒')"
+        >
+          <span class="answer-letter">B</span>
+          30秒
+        </button>
+
+        <button
+          class="answer answer-c"
+          onclick="selectAnswer('C', '45秒')"
+        >
+          <span class="answer-letter">C</span>
+          45秒
+        </button>
+
+        <button
+          class="answer answer-d"
+          onclick="selectAnswer('D', '60秒')"
+        >
+          <span class="answer-letter">D</span>
+          60秒
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ④ 回答完了画面 -->
+  <div class="screen" id="answeredScreen">
+    <div class="card">
+
+      <div class="check">
+        ✓
+      </div>
+
+      <h2>回答完了！</h2>
+
+      <p>
+        回答を受け付けました。
+      </p>
+
+      <div
+        class="selected-answer"
+        id="selectedAnswer"
+      ></div>
+
+      <p class="waiting-text">
+        次の問題まで<br>
         そのままお待ちください。
       </p>
 
@@ -148,6 +360,13 @@
 
 
   <script>
+
+    let timeLeft = 45;
+    let timerInterval = null;
+    let hasAnswered = false;
+
+
+    // チーム参加
     function joinQuiz() {
 
       const teamName =
@@ -167,6 +386,78 @@
       document.getElementById("waitingScreen").style.display =
         "flex";
     }
+
+
+    // クイズ開始
+    function startQuiz() {
+
+      document.getElementById("waitingScreen").style.display =
+        "none";
+
+      document.getElementById("quizScreen").style.display =
+        "flex";
+
+      timeLeft = 45;
+      hasAnswered = false;
+
+      document.getElementById("timer").textContent =
+        timeLeft;
+
+      timerInterval = setInterval(function() {
+
+        timeLeft--;
+
+        document.getElementById("timer").textContent =
+          timeLeft;
+
+        if (timeLeft <= 0) {
+
+          clearInterval(timerInterval);
+
+          timeUp();
+        }
+
+      }, 1000);
+    }
+
+
+    // 回答
+    function selectAnswer(letter, answerText) {
+
+      if (hasAnswered) {
+        return;
+      }
+
+      hasAnswered = true;
+
+      clearInterval(timerInterval);
+
+      document.getElementById("selectedAnswer").textContent =
+        "あなたの回答：" + letter + "「" + answerText + "」";
+
+      document.getElementById("quizScreen").style.display =
+        "none";
+
+      document.getElementById("answeredScreen").style.display =
+        "flex";
+    }
+
+
+    // 時間切れ
+    function timeUp() {
+
+      hasAnswered = true;
+
+      document.getElementById("selectedAnswer").textContent =
+        "時間切れ：回答なし";
+
+      document.getElementById("quizScreen").style.display =
+        "none";
+
+      document.getElementById("answeredScreen").style.display =
+        "flex";
+    }
+
   </script>
 
 </body>
