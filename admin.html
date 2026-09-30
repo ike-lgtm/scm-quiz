@@ -3,13 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>SCM QUIZ 運営画面</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -24,9 +21,7 @@
       padding: 30px 0 60px;
     }
 
-    h1 {
-      margin-bottom: 6px;
-    }
+    h1 { margin-bottom: 6px; }
 
     .subtitle {
       color: #666;
@@ -38,12 +33,12 @@
       border-radius: 16px;
       padding: 22px;
       margin-bottom: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3,1fr);
       gap: 14px;
     }
 
@@ -68,12 +63,11 @@
     .status {
       font-size: 22px;
       font-weight: bold;
-      margin-top: 8px;
     }
 
     .button-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2,1fr);
       gap: 12px;
     }
 
@@ -86,9 +80,7 @@
       cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.88;
-    }
+    button:hover { opacity: .88; }
 
     .primary {
       background: #222;
@@ -108,35 +100,38 @@
     .danger {
       background: #b42318;
       color: white;
+      width: 100%;
     }
 
     .danger-zone {
       border: 2px solid #ffd4d0;
     }
 
-    .team-list,
-    .answer-list {
-      margin-top: 15px;
+    .list {
       display: grid;
       gap: 8px;
+      margin-top: 12px;
     }
 
-    .team-item,
-    .answer-item {
-      padding: 10px 12px;
+    .item {
+      padding: 11px 12px;
       background: #f7f7f7;
       border-radius: 8px;
     }
 
+    .score {
+      font-weight: bold;
+    }
+
     .notice {
-      font-size: 13px;
       color: #777;
+      font-size: 13px;
       line-height: 1.6;
     }
 
-    @media (max-width: 600px) {
-      .button-grid,
-      .stats {
+    @media(max-width:600px) {
+      .stats,
+      .button-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -148,52 +143,32 @@
 <div class="container">
 
   <h1>SCM QUIZ 運営画面</h1>
-
-  <div class="subtitle">
-    参加状況・クイズ進行管理
-  </div>
+  <div class="subtitle">参加状況・クイズ進行管理</div>
 
 
-  <!-- 現在の状態 -->
   <div class="card">
-
     <h2>現在の状態</h2>
-
-    <div id="gameStatus" class="status">
-      読み込み中...
-    </div>
-
+    <div id="gameStatus" class="status">読み込み中...</div>
   </div>
 
 
-  <!-- 集計 -->
   <div class="card">
 
     <div class="stats">
 
       <div class="stat">
-
-        <div class="stat-label">
-          参加チーム
-        </div>
-
-        <div id="teamCount" class="stat-number">
-          0
-        </div>
-
+        <div class="stat-label">参加チーム</div>
+        <div id="teamCount" class="stat-number">0</div>
       </div>
 
+      <div class="stat">
+        <div class="stat-label">回答済み</div>
+        <div id="answerCount" class="stat-number">0</div>
+      </div>
 
       <div class="stat">
-
-        <div class="stat-label">
-          現在の問題 回答済み
-        </div>
-
-        <div id="answerCount" class="stat-number">
-          0
-        </div>
-
+        <div class="stat-label">現在の問題</div>
+        <div id="currentQuestionDisplay" class="stat-number">-</div>
       </div>
 
     </div>
@@ -201,87 +176,76 @@
   </div>
 
 
-  <!-- クイズ操作 -->
   <div class="card">
 
     <h2>クイズ操作</h2>
 
     <div class="button-grid">
 
-      <button
-        id="waitingButton"
-        class="secondary">
+      <button id="waitingButton" class="secondary">
         待機画面に戻す
       </button>
 
-
-      <button
-        id="practiceButton"
-        class="primary">
+      <button id="practiceButton" class="primary">
         練習問題を開始
       </button>
 
-
-      <button
-        id="resultButton"
-        class="result">
-        正解を発表
+      <button id="resultButton" class="result">
+        正解を発表・得点確定
       </button>
 
-
-      <button
-        id="q1Button"
-        class="primary">
+      <button id="q1Button" class="primary">
         Q1を開始
       </button>
 
     </div>
 
-    <p class="notice">
-      現在は動作確認のため、練習問題とQ1まで操作できます。
-      動作確認後にQ2〜Q10、中間ランキング、最終ランキングを追加します。
-    </p>
-
   </div>
 
 
-  <!-- 回答状況 -->
   <div class="card">
 
-    <h2>現在の問題の回答状況</h2>
+    <h2>現在の回答状況</h2>
 
-    <div id="answerList" class="answer-list">
+    <div id="answerList" class="list">
       まだ回答はありません
     </div>
 
   </div>
 
 
-  <!-- チーム -->
   <div class="card">
 
-    <h2>参加チーム一覧</h2>
+    <h2>得点状況</h2>
 
-    <div id="teamList" class="team-list">
+    <div id="scoreList" class="list">
+      まだ得点はありません
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>参加チーム</h2>
+
+    <div id="teamList" class="list">
       まだ参加チームはありません
     </div>
 
   </div>
 
 
-  <!-- リセット -->
   <div class="card danger-zone">
 
     <h2>テスト用リセット</h2>
 
     <p>
-      参加チーム・回答・得点・現在の進行状態を
+      参加チーム・回答・得点・問題開始時刻を
       すべて削除します。
     </p>
 
-    <button
-      id="resetButton"
-      class="danger">
+    <button id="resetButton" class="danger">
       テストデータを全削除
     </button>
 
@@ -296,58 +260,56 @@
 
 <script type="module">
 
-import {
-  initializeApp
-}
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
 
 import {
   getDatabase,
   ref,
   onValue,
   set,
+  get,
   remove,
+  update,
   serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
-
-  authDomain:
-    "scm-quiz-df0e6.firebaseapp.com",
-
-  databaseURL:
-    "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
-
-  projectId:
-    "scm-quiz-df0e6",
-
-  storageBucket:
-    "scm-quiz-df0e6.firebasestorage.app",
-
-  messagingSenderId:
-    "30616205850",
-
-  appId:
-    "1:30616205850:web:224b6386ee807700d26fa3"
+  apiKey: "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
+  authDomain: "scm-quiz-df0e6.firebaseapp.com",
+  databaseURL: "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "scm-quiz-df0e6",
+  storageBucket: "scm-quiz-df0e6.firebasestorage.app",
+  messagingSenderId: "30616205850",
+  appId: "1:30616205850:web:224b6386ee807700d26fa3"
 };
 
 
-const app =
-  initializeApp(firebaseConfig);
-
-const database =
-  getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 
-/* =========================
+/* ==========================================
+   正解データ
+   後でQ2〜Q10を追加します
+
+   0 = A
+   1 = B
+   2 = C
+   3 = D
+========================================== */
+
+const correctAnswers = {
+  practice: 1,
+  q1: 0
+};
+
+
+/* ==========================================
    DOM
-========================= */
+========================================== */
 
 const teamCount =
   document.getElementById("teamCount");
@@ -358,11 +320,17 @@ const answerCount =
 const gameStatus =
   document.getElementById("gameStatus");
 
+const currentQuestionDisplay =
+  document.getElementById("currentQuestionDisplay");
+
 const teamList =
   document.getElementById("teamList");
 
 const answerList =
   document.getElementById("answerList");
+
+const scoreList =
+  document.getElementById("scoreList");
 
 const waitingButton =
   document.getElementById("waitingButton");
@@ -381,31 +349,27 @@ const resetButton =
 
 
 let currentQuestion = null;
-
+let teams = {};
 let unsubscribeAnswers = null;
 
 
-/* =========================
-   TEAM LIST
-========================= */
+/* ==========================================
+   チーム監視
+========================================== */
 
 onValue(
   ref(database, "teams"),
   snapshot => {
 
-    const teams =
-      snapshot.val() || {};
+    teams = snapshot.val() || {};
 
     const teamArray =
       Object.entries(teams);
 
-
     teamCount.textContent =
       teamArray.length;
 
-
     teamList.innerHTML = "";
-
 
     if (teamArray.length === 0) {
 
@@ -415,15 +379,13 @@ onValue(
       return;
     }
 
-
     teamArray.forEach(
       ([id, team], index) => {
 
         const div =
           document.createElement("div");
 
-        div.className =
-          "team-item";
+        div.className = "item";
 
         div.textContent =
           `${index + 1}. ${team.name}`;
@@ -437,9 +399,9 @@ onValue(
 );
 
 
-/* =========================
-   GAME
-========================= */
+/* ==========================================
+   GAME監視
+========================================== */
 
 onValue(
   ref(database, "game"),
@@ -448,13 +410,15 @@ onValue(
     const game =
       snapshot.val();
 
-
     if (!game) {
 
       currentQuestion = null;
 
       gameStatus.textContent =
         "待機中";
+
+      currentQuestionDisplay.textContent =
+        "-";
 
       watchAnswers(null);
 
@@ -466,6 +430,18 @@ onValue(
       game.currentQuestion || null;
 
 
+    const label =
+      currentQuestion === "practice"
+        ? "練習"
+        : currentQuestion
+          ? currentQuestion.toUpperCase()
+          : "-";
+
+
+    currentQuestionDisplay.textContent =
+      label;
+
+
     if (game.phase === "waiting") {
 
       gameStatus.textContent =
@@ -475,14 +451,6 @@ onValue(
 
       return;
     }
-
-
-    const label =
-      currentQuestion === "practice"
-        ? "練習問題"
-        : currentQuestion
-          ? currentQuestion.toUpperCase()
-          : "";
 
 
     if (game.phase === "question") {
@@ -509,16 +477,15 @@ onValue(
 );
 
 
-/* =========================
-   ANSWERS
-========================= */
+/* ==========================================
+   回答監視
+========================================== */
 
 function watchAnswers(questionKey) {
 
   if (unsubscribeAnswers) {
 
     unsubscribeAnswers();
-
     unsubscribeAnswers = null;
 
   }
@@ -547,18 +514,18 @@ function watchAnswers(questionKey) {
         const answers =
           snapshot.val() || {};
 
-        const answerArray =
+        const entries =
           Object.values(answers);
 
 
         answerCount.textContent =
-          answerArray.length;
+          entries.length;
 
 
         answerList.innerHTML = "";
 
 
-        if (answerArray.length === 0) {
+        if (entries.length === 0) {
 
           answerList.textContent =
             "まだ回答はありません";
@@ -571,23 +538,16 @@ function watchAnswers(questionKey) {
           ["A", "B", "C", "D"];
 
 
-        answerArray.forEach(
+        entries.forEach(
           answer => {
 
             const div =
               document.createElement("div");
 
-            div.className =
-              "answer-item";
-
-
-            const letter =
-              letters[answer.choice] ?? "-";
-
+            div.className = "item";
 
             div.textContent =
-              `${answer.teamName}：${letter}`;
-
+              `${answer.teamName}：${letters[answer.choice] ?? "-"}`;
 
             answerList.appendChild(div);
 
@@ -600,33 +560,109 @@ function watchAnswers(questionKey) {
 }
 
 
-/* =========================
-   WAITING
-========================= */
+/* ==========================================
+   得点監視・順位表示
+========================================== */
+
+onValue(
+  ref(database, "scores"),
+  snapshot => {
+
+    const scores =
+      snapshot.val() || {};
+
+
+    const ranking =
+      Object.entries(teams).map(
+        ([teamId, team]) => {
+
+          const teamScores =
+            scores[teamId] || {};
+
+
+          const total =
+            Object.values(teamScores)
+              .reduce(
+                (sum, value) =>
+                  sum + Number(value || 0),
+                0
+              );
+
+
+          return {
+            teamId,
+            name: team.name,
+            total
+          };
+
+        }
+      );
+
+
+    ranking.sort(
+      (a, b) =>
+        b.total - a.total
+    );
+
+
+    scoreList.innerHTML = "";
+
+
+    if (ranking.length === 0) {
+
+      scoreList.textContent =
+        "まだ得点はありません";
+
+      return;
+    }
+
+
+    ranking.forEach(
+      (team, index) => {
+
+        const div =
+          document.createElement("div");
+
+        div.className = "item";
+
+
+        div.innerHTML =
+          `${index + 1}位　${team.name}
+          <span class="score">
+          ：${team.total} pt
+          </span>`;
+
+
+        scoreList.appendChild(div);
+
+      }
+    );
+
+  }
+);
+
+
+/* ==========================================
+   待機
+========================================== */
 
 waitingButton.addEventListener(
   "click",
   async () => {
 
-    const ok =
-      confirm(
-        "参加者の画面を待機状態に戻しますか？"
-      );
-
-    if (!ok) return;
+    if (
+      !confirm(
+        "待機画面に戻しますか？"
+      )
+    ) return;
 
 
     await set(
       ref(database, "game"),
       {
-
         phase: "waiting",
-
         currentQuestion: null,
-
-        updatedAt:
-          serverTimestamp()
-
+        updatedAt: serverTimestamp()
       }
     );
 
@@ -634,44 +670,291 @@ waitingButton.addEventListener(
 );
 
 
-/* =========================
-   PRACTICE
-========================= */
+/* ==========================================
+   問題開始共通処理
+========================================== */
+
+async function startQuestion(questionKey) {
+
+  /*
+    roundsに開始時刻を保存。
+
+    gameが後でresultになっても、
+    rounds側の開始時刻は残ります。
+  */
+
+  await set(
+    ref(
+      database,
+      `rounds/${questionKey}`
+    ),
+    {
+      startedAt:
+        serverTimestamp()
+    }
+  );
+
+
+  /*
+    既存の開始時刻がサーバー値へ
+    確定するのを取得
+  */
+
+  const roundSnapshot =
+    await get(
+      ref(
+        database,
+        `rounds/${questionKey}`
+      )
+    );
+
+
+  const round =
+    roundSnapshot.val();
+
+
+  await set(
+    ref(database, "game"),
+    {
+      phase: "question",
+      currentQuestion:
+        questionKey,
+
+      startedAt:
+        round?.startedAt ?? serverTimestamp()
+    }
+  );
+
+}
+
+
+/* ==========================================
+   練習開始
+========================================== */
 
 practiceButton.addEventListener(
   "click",
   async () => {
 
-    const ok =
-      confirm(
+    if (
+      !confirm(
         "練習問題を開始しますか？"
-      );
+      )
+    ) return;
 
-    if (!ok) return;
 
-
-    await set(
-      ref(database, "game"),
-      {
-
-        phase: "question",
-
-        currentQuestion:
-          "practice",
-
-        startedAt:
-          serverTimestamp()
-
-      }
+    await startQuestion(
+      "practice"
     );
 
   }
 );
 
 
-/* =========================
-   RESULT
-========================= */
+/* ==========================================
+   Q1開始
+========================================== */
+
+q1Button.addEventListener(
+  "click",
+  async () => {
+
+    if (
+      !confirm(
+        "Q1を開始しますか？"
+      )
+    ) return;
+
+
+    await startQuestion(
+      "q1"
+    );
+
+  }
+);
+
+
+/* ==========================================
+   得点計算
+========================================== */
+
+async function calculateScores(
+  questionKey
+) {
+
+  /*
+    練習問題は得点なし
+  */
+
+  if (
+    questionKey === "practice"
+  ) {
+    return;
+  }
+
+
+  const correct =
+    correctAnswers[questionKey];
+
+
+  if (
+    correct === undefined
+  ) {
+
+    throw new Error(
+      "正解データがありません"
+    );
+
+  }
+
+
+  const roundSnapshot =
+    await get(
+      ref(
+        database,
+        `rounds/${questionKey}`
+      )
+    );
+
+
+  const round =
+    roundSnapshot.val();
+
+
+  if (
+    !round ||
+    typeof round.startedAt !== "number"
+  ) {
+
+    throw new Error(
+      "問題開始時刻が取得できません"
+    );
+
+  }
+
+
+  const startedAt =
+    round.startedAt;
+
+
+  const answersSnapshot =
+    await get(
+      ref(
+        database,
+        `answers/${questionKey}`
+      )
+    );
+
+
+  const answers =
+    answersSnapshot.val() || {};
+
+
+  const updates = {};
+
+
+  /*
+    全参加チームに対して計算
+  */
+
+  Object.keys(teams).forEach(
+    teamId => {
+
+      const answer =
+        answers[teamId];
+
+
+      let points = 0;
+
+
+      if (
+        answer &&
+        answer.choice === correct &&
+        typeof answer.answeredAt === "number"
+      ) {
+
+        /*
+          回答までにかかった秒数
+        */
+
+        const elapsedMs =
+          Math.max(
+            0,
+            answer.answeredAt -
+            startedAt
+          );
+
+
+        const elapsedSeconds =
+          elapsedMs / 1000;
+
+
+        /*
+          45秒を超えた回答は0点
+        */
+
+        if (
+          elapsedSeconds <= 45
+        ) {
+
+          const remainingSeconds =
+            Math.max(
+              0,
+              45 -
+              elapsedSeconds
+            );
+
+
+          /*
+            500基本点
+            ＋
+            最大500スピード点
+          */
+
+          points =
+            Math.round(
+              500 +
+              500 *
+              (
+                remainingSeconds /
+                45
+              )
+            );
+
+
+          points =
+            Math.min(
+              1000,
+              Math.max(
+                500,
+                points
+              )
+            );
+
+        }
+
+      }
+
+
+      updates[
+        `scores/${teamId}/${questionKey}`
+      ] = points;
+
+    }
+  );
+
+
+  await update(
+    ref(database),
+    updates
+  );
+
+}
+
+
+/* ==========================================
+   正解発表
+========================================== */
 
 resultButton.addEventListener(
   "click",
@@ -684,74 +967,75 @@ resultButton.addEventListener(
       );
 
       return;
+
     }
 
 
-    const ok =
-      confirm(
+    if (
+      !confirm(
         "正解を発表しますか？"
+      )
+    ) return;
+
+
+    resultButton.disabled = true;
+
+    resultButton.textContent =
+      "集計中...";
+
+
+    try {
+
+      /*
+        先に得点確定
+      */
+
+      await calculateScores(
+        currentQuestion
       );
 
-    if (!ok) return;
+
+      /*
+        その後、参加者画面を
+        正解発表へ切り替える
+      */
+
+      await set(
+        ref(database, "game"),
+        {
+          phase: "result",
+          currentQuestion:
+            currentQuestion,
+          revealedAt:
+            serverTimestamp()
+        }
+      );
 
 
-    await set(
-      ref(database, "game"),
-      {
+    } catch (error) {
 
-        phase: "result",
+      console.error(error);
 
-        currentQuestion:
-          currentQuestion,
+      alert(
+        "得点集計に失敗しました。\n" +
+        error.message
+      );
 
-        revealedAt:
-          serverTimestamp()
+    }
 
-      }
-    );
+
+    resultButton.disabled = false;
+
+    resultButton.textContent =
+      "正解を発表・得点確定";
 
   }
 );
 
 
-/* =========================
-   Q1
-========================= */
-
-q1Button.addEventListener(
-  "click",
-  async () => {
-
-    const ok =
-      confirm(
-        "Q1を開始しますか？"
-      );
-
-    if (!ok) return;
-
-
-    await set(
-      ref(database, "game"),
-      {
-
-        phase: "question",
-
-        currentQuestion:
-          "q1",
-
-        startedAt:
-          serverTimestamp()
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================
-   RESET
-========================= */
+/* ==========================================
+   全削除
+========================================== */
 
 resetButton.addEventListener(
   "click",
@@ -759,27 +1043,28 @@ resetButton.addEventListener(
 
     const input =
       prompt(
-        "全テストデータを削除します。\n\n削除する場合は RESET と入力してください。"
+        "全テストデータを削除します。\n\nRESET と入力してください。"
       );
 
 
-    if (input !== "RESET") {
+    if (
+      input !== "RESET"
+    ) {
 
       alert(
         "削除をキャンセルしました。"
       );
 
       return;
+
     }
 
 
-    const finalCheck =
-      confirm(
-        "本当に削除しますか？\n\n参加チーム・回答・得点がすべて削除されます。"
-      );
-
-
-    if (!finalCheck) return;
+    if (
+      !confirm(
+        "本当にすべて削除しますか？"
+      )
+    ) return;
 
 
     resetButton.disabled = true;
@@ -802,6 +1087,10 @@ resetButton.addEventListener(
 
         remove(
           ref(database, "scores")
+        ),
+
+        remove(
+          ref(database, "rounds")
         )
 
       ]);
@@ -810,14 +1099,10 @@ resetButton.addEventListener(
       await set(
         ref(database, "game"),
         {
-
           phase: "waiting",
-
           currentQuestion: null,
-
           updatedAt:
             serverTimestamp()
-
         }
       );
 
