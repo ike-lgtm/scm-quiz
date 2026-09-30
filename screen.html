@@ -23,16 +23,12 @@
       display: none;
       width: 100vw;
       height: 100vh;
-      padding: 5vh 6vw;
+      padding: 4vh 5vw;
     }
 
     .screen.active {
       display: flex;
     }
-
-    /* ==============================
-       共通
-    ============================== */
 
     .eyebrow {
       font-size: clamp(18px, 2vw, 30px);
@@ -50,9 +46,9 @@
       margin: 3vh 0;
     }
 
-    /* ==============================
+    /* =========================
        タイトル
-    ============================== */
+    ========================= */
 
     #titleScreen {
       flex-direction: column;
@@ -81,9 +77,9 @@
       opacity: .75;
     }
 
-    /* ==============================
+    /* =========================
        ルール
-    ============================== */
+    ========================= */
 
     #rulesScreen {
       flex-direction: column;
@@ -94,34 +90,34 @@
     .slide-title {
       font-size: clamp(46px, 6vw, 82px);
       font-weight: 950;
-      margin-bottom: 4vh;
+      margin-bottom: 3vh;
     }
 
     .rules-box {
       width: min(100%, 1050px);
       display: grid;
-      gap: 1.7vh;
+      gap: 1.3vh;
     }
 
     .rule {
       display: flex;
       align-items: center;
       gap: 22px;
-      font-size: clamp(22px, 2.3vw, 35px);
+      font-size: clamp(21px, 2.2vw, 34px);
       font-weight: 750;
-      padding: 1.2vh 0;
+      padding: 1vh 0;
     }
 
     .rule-number {
-      width: 50px;
-      height: 50px;
-      min-width: 50px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 2px solid #fff;
       border-radius: 50%;
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 900;
     }
 
@@ -129,9 +125,9 @@
       font-weight: 950;
     }
 
-    /* ==============================
+    /* =========================
        練習案内
-    ============================== */
+    ========================= */
 
     #practiceIntroScreen {
       flex-direction: column;
@@ -162,9 +158,9 @@
       font-weight: 800;
     }
 
-    /* ==============================
+    /* =========================
        待機
-    ============================== */
+    ========================= */
 
     #waitingScreen {
       flex-direction: column;
@@ -190,9 +186,9 @@
       opacity: .55;
     }
 
-    /* ==============================
+    /* =========================
        問題
-    ============================== */
+    ========================= */
 
     #questionScreen {
       flex-direction: column;
@@ -203,33 +199,35 @@
       align-items: center;
       justify-content: space-between;
       gap: 30px;
+      flex-shrink: 0;
     }
 
     .question-label {
-      font-size: clamp(24px, 2.8vw, 40px);
+      font-size: clamp(24px, 2.7vw, 40px);
       font-weight: 900;
     }
 
     .timer {
-      width: 105px;
-      height: 105px;
-      min-width: 105px;
-      border: 5px solid #fff;
+      width: 90px;
+      height: 90px;
+      min-width: 90px;
+      border: 4px solid #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 42px;
+      font-size: 37px;
       font-weight: 950;
     }
 
     .question-text {
       text-align: center;
-      font-size: clamp(30px, 3.5vw, 54px);
+      font-size: clamp(27px, 3.1vw, 49px);
       font-weight: 900;
-      line-height: 1.35;
-      margin: 1.5vh auto 2vh;
-      max-width: 1400px;
+      line-height: 1.3;
+      margin: 1vh auto 1.5vh;
+      max-width: 1450px;
+      flex-shrink: 0;
     }
 
     .question-images {
@@ -238,39 +236,48 @@
       align-items: center;
       gap: 2vw;
       min-height: 0;
-      margin-bottom: 2vh;
+      flex: 1;
+      overflow: hidden;
+      margin: 0 auto 1.5vh;
+      width: 100%;
     }
 
     .question-images img {
       display: block;
       object-fit: contain;
-      border-radius: 14px;
-      background: #fff;
+      border-radius: 12px;
       max-width: 46%;
-      max-height: 30vh;
+      max-height: 31vh;
     }
 
     .question-images.one-image img {
-      max-width: 72%;
+      max-width: min(80vw, 1100px);
       max-height: 34vh;
+      width: auto;
+      height: auto;
+    }
+
+    .question-images:empty {
+      display: none;
     }
 
     .choices {
-      width: min(100%, 1300px);
+      width: min(100%, 1350px);
       margin: auto auto 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
+      flex-shrink: 0;
     }
 
     .choice {
       background: #181818;
       border: 2px solid #333;
       border-radius: 14px;
-      padding: 18px 24px;
-      font-size: clamp(19px, 2vw, 29px);
+      padding: 15px 22px;
+      font-size: clamp(18px, 1.8vw, 27px);
       font-weight: 800;
-      line-height: 1.3;
+      line-height: 1.25;
     }
 
     .choice-letter {
@@ -280,15 +287,32 @@
 
     .answer-counter {
       text-align: center;
-      margin-top: 1.7vh;
-      font-size: clamp(18px, 1.8vw, 27px);
+      margin-top: 1.2vh;
+      font-size: clamp(17px, 1.6vw, 25px);
       font-weight: 800;
       opacity: .7;
+      flex-shrink: 0;
     }
 
-    /* ==============================
+    /* 画像なし問題は少し大きく */
+    #questionScreen.no-image .question-text {
+      font-size: clamp(34px, 4vw, 62px);
+      margin-top: 5vh;
+    }
+
+    #questionScreen.no-image .choices {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    #questionScreen.no-image .choice {
+      padding: 24px;
+      font-size: clamp(21px, 2.3vw, 34px);
+    }
+
+    /* =========================
        正解発表
-    ============================== */
+    ========================= */
 
     #resultScreen {
       flex-direction: column;
@@ -350,20 +374,20 @@
     }
 
     .explanation {
-      width: min(100%, 1100px);
+      width: min(100%, 1150px);
       margin-top: 4vh;
       padding: 22px 30px;
       border-top: 1px solid #444;
       text-align: center;
       white-space: pre-line;
       font-size: clamp(19px, 2vw, 28px);
-      line-height: 1.6;
+      line-height: 1.55;
       font-weight: 650;
     }
 
-    /* ==============================
+    /* =========================
        中間ランキング
-    ============================== */
+    ========================= */
 
     #rankingScreen {
       flex-direction: column;
@@ -409,9 +433,9 @@
       font-weight: 950;
     }
 
-    /* ==============================
+    /* =========================
        FINAL
-    ============================== */
+    ========================= */
 
     #finalScreen {
       flex-direction: column;
@@ -443,236 +467,236 @@
 
 <body>
 
-  <!-- タイトル -->
-  <section id="titleScreen" class="screen">
-    <div class="eyebrow">SCM SPECIAL EVENT</div>
+<!-- タイトル -->
+<section id="titleScreen" class="screen">
 
-    <div class="main-logo">
-      SCM QUIZ
-    </div>
+  <div class="eyebrow">
+    SCM SPECIAL EVENT
+  </div>
 
-    <div class="accent-line"></div>
+  <div class="main-logo">
+    SCM QUIZ
+  </div>
 
-    <div class="title-main">
-      第1回 部署・拠点横断 チーム対抗クイズ！
-    </div>
+  <div class="accent-line"></div>
 
-    <div class="title-sub">
-      〜SCMを一番知っているのはどこのチーム？〜
-    </div>
-  </section>
+  <div class="title-main">
+    第1回 部署・拠点横断 チーム対抗クイズ！
+  </div>
+
+  <div class="title-sub">
+    〜SCMを一番知っているのはどこのチーム？〜
+  </div>
+
+</section>
 
 
-  <!-- ルール -->
-  <section id="rulesScreen" class="screen">
+<!-- ルール -->
+<section id="rulesScreen" class="screen">
 
-    <div class="slide-title">
-      RULES
-    </div>
+  <div class="slide-title">
+    RULES
+  </div>
 
-    <div class="rules-box">
+  <div class="rules-box">
 
-      <div class="rule">
-        <div class="rule-number">1</div>
-        <div>
-          1チーム <strong>6〜7名</strong>
-        </div>
+    <div class="rule">
+      <div class="rule-number">1</div>
+      <div>
+        1チーム <strong>6〜7名</strong>
       </div>
+    </div>
 
-      <div class="rule">
-        <div class="rule-number">2</div>
-        <div>
-          チームで相談して回答を決定
-        </div>
+    <div class="rule">
+      <div class="rule-number">2</div>
+      <div>
+        チームで相談して回答を決定
       </div>
+    </div>
 
-      <div class="rule">
-        <div class="rule-number">3</div>
-        <div>
-          代表者1名がスマホから回答
-        </div>
+    <div class="rule">
+      <div class="rule-number">3</div>
+      <div>
+        代表者1名がスマホから回答
       </div>
+    </div>
 
-      <div class="rule">
-        <div class="rule-number">4</div>
-        <div>
-          回答時間は各問題 <strong>45秒</strong>
-        </div>
+    <div class="rule">
+      <div class="rule-number">4</div>
+      <div>
+        回答時間は各問題 <strong>45秒</strong>
       </div>
+    </div>
 
-      <div class="rule">
-        <div class="rule-number">5</div>
-        <div>
-          正解 <strong>500pt</strong> ＋
-          早押しボーナス <strong>最大500pt</strong>
-        </div>
+    <div class="rule">
+      <div class="rule-number">5</div>
+      <div>
+        正解 <strong>500pt</strong> ＋
+        早押しボーナス <strong>最大500pt</strong>
       </div>
+    </div>
 
-      <div class="rule">
-        <div class="rule-number">6</div>
-        <div>
-          1問最大 <strong>1,000pt</strong>
-        </div>
+    <div class="rule">
+      <div class="rule-number">6</div>
+      <div>
+        1問最大 <strong>1,000pt</strong>
       </div>
+    </div>
 
-      <div class="rule">
-        <div class="rule-number">7</div>
-        <div>
-          全10問の合計得点で順位決定！
-        </div>
+    <div class="rule">
+      <div class="rule-number">7</div>
+      <div>
+        全10問の合計得点で順位決定！
       </div>
-
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- 練習問題案内 -->
-  <section id="practiceIntroScreen" class="screen">
+<!-- 練習問題案内 -->
+<section id="practiceIntroScreen" class="screen">
 
-    <div class="eyebrow">
-      PRACTICE
-    </div>
+  <div class="eyebrow">
+    PRACTICE
+  </div>
 
-    <div class="practice-big">
-      まずは練習問題！
-    </div>
+  <div class="practice-big">
+    まずは練習問題！
+  </div>
 
-    <div class="practice-text">
-      回答方法を確認してみましょう
-    </div>
+  <div class="practice-text">
+    回答方法を確認してみましょう
+  </div>
 
-    <div class="practice-note">
-      ※ 練習問題は得点に入りません
-    </div>
+  <div class="practice-note">
+    ※ 練習問題は得点に入りません
+  </div>
 
-  </section>
-
-
-  <!-- 待機 -->
-  <section id="waitingScreen" class="screen active">
-
-    <div class="waiting-title">
-      SCM QUIZ
-    </div>
-
-    <div class="waiting-sub">
-      部署横断！チーム対抗クイズ
-    </div>
-
-    <div class="waiting-note">
-      まもなくスタートします
-    </div>
-
-  </section>
+</section>
 
 
-  <!-- 問題 -->
-  <section id="questionScreen" class="screen">
+<!-- 待機 -->
+<section id="waitingScreen" class="screen active">
 
-    <div class="question-top">
+  <div class="waiting-title">
+    SCM QUIZ
+  </div>
 
-      <div
-        id="questionLabel"
-        class="question-label"
-      >
-        Q1
-      </div>
+  <div class="waiting-sub">
+    部署横断！チーム対抗クイズ
+  </div>
 
-      <div
-        id="timer"
-        class="timer"
-      >
-        45
-      </div>
+  <div class="waiting-note">
+    まもなくスタートします
+  </div>
 
-    </div>
+</section>
 
+
+<!-- 問題 -->
+<section id="questionScreen" class="screen">
+
+  <div class="question-top">
 
     <div
-      id="questionText"
-      class="question-text"
-    ></div>
-
-
-    <div
-      id="questionImages"
-      class="question-images"
-    ></div>
-
-
-    <div
-      id="choices"
-      class="choices"
-    ></div>
-
-
-    <div
-      id="answerCounter"
-      class="answer-counter"
+      id="questionLabel"
+      class="question-label"
     >
-      回答 0 / 0 チーム
-    </div>
-
-  </section>
-
-
-  <!-- 正解 -->
-  <section id="resultScreen" class="screen">
-
-    <div class="result-heading">
-      正解発表
+      Q1
     </div>
 
     <div
-      id="correctAnswer"
-      class="correct-answer"
-    ></div>
-
-    <div
-      id="distribution"
-      class="distribution"
-    ></div>
-
-    <div
-      id="explanation"
-      class="explanation"
-    ></div>
-
-  </section>
-
-
-  <!-- 中間ランキング -->
-  <section id="rankingScreen" class="screen">
-
-    <div class="ranking-title">
-      🏆 中間ランキング 🏆
+      id="timer"
+      class="timer"
+    >
+      45
     </div>
 
-    <div
-      id="rankingList"
-      class="ranking-list"
-    ></div>
+  </div>
 
-  </section>
+  <div
+    id="questionText"
+    class="question-text"
+  ></div>
+
+  <div
+    id="questionImages"
+    class="question-images"
+  ></div>
+
+  <div
+    id="choices"
+    class="choices"
+  ></div>
+
+  <div
+    id="answerCounter"
+    class="answer-counter"
+  >
+    回答 0 / 0 チーム
+  </div>
+
+</section>
 
 
-  <!-- 最終結果 -->
-  <section id="finalScreen" class="screen">
+<!-- 正解発表 -->
+<section id="resultScreen" class="screen">
 
-    <div class="final-small">
-      FINAL
-    </div>
+  <div class="result-heading">
+    正解発表
+  </div>
 
-    <div class="final-title">
-      最終結果発表
-    </div>
+  <div
+    id="correctAnswer"
+    class="correct-answer"
+  ></div>
 
-    <div class="final-note">
-      最終ランキングを発表します
-    </div>
+  <div
+    id="distribution"
+    class="distribution"
+  ></div>
 
-  </section>
+  <div
+    id="explanation"
+    class="explanation"
+  ></div>
+
+</section>
+
+
+<!-- 中間ランキング -->
+<section id="rankingScreen" class="screen">
+
+  <div class="ranking-title">
+    🏆 中間ランキング 🏆
+  </div>
+
+  <div
+    id="rankingList"
+    class="ranking-list"
+  ></div>
+
+</section>
+
+
+<!-- 最終結果 -->
+<section id="finalScreen" class="screen">
+
+  <div class="final-small">
+    FINAL
+  </div>
+
+  <div class="final-title">
+    最終結果発表
+  </div>
+
+  <div class="final-note">
+    最終ランキングを発表します
+  </div>
+
+</section>
 
 
 <script type="module">
@@ -705,206 +729,308 @@ const database =
   getDatabase(app);
 
 
-/* ==============================
+/* =========================
    問題データ
-============================== */
+========================= */
 
 const questions = {
 
   practice: {
-    label: "練習問題",
-    text: "習志野拠点の最寄り駅は？",
+
+    label:
+      "練習問題",
+
+    text:
+      "習志野拠点の最寄り駅は？",
+
     choices: [
       "南船橋駅",
       "幕張豊砂駅",
       "新習志野駅",
       "新浦安駅"
     ],
+
     correct: 1,
+
     images: [],
+
     explanation:
       "練習問題です！\n本番も同じ流れで回答してください。"
+
   },
 
 
   q1: {
-    label: "Q1",
+
+    label:
+      "Q1",
+
     text:
       "船橋・習志野を足したロジ面積数（㎡）は？ちなみに1坪数は3.30578です。",
+
     choices: [
       "約18,843㎡",
       "約19,112㎡",
       "約20,896㎡",
       "約17,456㎡"
     ],
+
     correct: 0,
-    images: [],
+
+    images: [
+      "images/01.png"
+    ],
+
     explanation:
       "船橋 3,300坪 → 約10,909㎡\n習志野 2,400坪 → 約7,934㎡"
+
   },
 
 
   q2: {
-    label: "Q2",
+
+    label:
+      "Q2",
+
     text:
       "勤続年数が一番長いPAがいるチームはどこ？",
+
     choices: [
       "販売1部 販売1G",
       "販売1部 販売3G",
       "toC販売部 出品管理G",
       "物流管理部 千葉物流管理G"
     ],
+
     correct: 0,
+
     images: [],
+
     explanation:
       "販売1部 販売1GのPAさんは11年5ヶ月。\n査定研修部 査定2Gと販売2部にも同じ在籍数の方が1名ずついます！"
+
   },
 
 
   q3: {
-    label: "Q3",
+
+    label:
+      "Q3",
+
     text:
       "上半期バイセルALL（グループ含む）総買取点数は？ ※バーコード点数",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
-    images: [],
+
+    images: [
+      "images/03.png"
+    ],
+
     explanation:
       "解説は後ほど設定します。"
+
   },
 
 
   q4: {
-    label: "Q4",
+
+    label:
+      "Q4",
+
     text:
       "現在（10月1日）の貴金属相場1gの相場は？",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
-    images: [],
+
+    images: [
+      "images/04.png"
+    ],
+
     explanation:
       "解説は後ほど設定します。"
+
   },
 
 
   q5: {
-    label: "Q5",
+
+    label:
+      "Q5",
+
     text:
       "ルイヴィトンのモノグラム柄（画像①）やダミエ柄（画像②）は、ある国の伝統的な文様から着想を得て生まれました。その国はどこでしょうか？",
+
     choices: [
       "イタリア",
       "フランス",
       "ドイツ",
       "日本"
     ],
+
     correct: 3,
-    images: [],
+
+    images: [
+      "images/05.png"
+    ],
+
     explanation:
       "19世紀後半のヨーロッパでは、日本美術やデザインの影響を受けた「ジャポニスム」が広がりました。\nルイ・ヴィトンのデザインも、日本文化との関連が語られています。"
+
   },
 
 
   q6: {
-    label: "Q6",
+
+    label:
+      "Q6",
+
     text:
       "【NJ】アレキサンドライトの特徴である「変色効果（カラーチェンジ）」を引き起こす主な微量元素は何でしょうか？",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
-    images: [],
+
+    images: [
+      "images/06.png"
+    ],
+
     explanation:
       "解説は後ほど設定します。"
+
   },
 
 
   q7: {
-    label: "Q7",
+
+    label:
+      "Q7",
+
     text:
       "【骨董】高い順に並べてください",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
+
     images: [],
+
     explanation:
       "解説は後ほど設定します。"
+
   },
 
 
   q8: {
-    label: "Q8",
+
+    label:
+      "Q8",
+
     text:
       "Q8の問題文を設定します",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
+
     images: [],
+
     explanation:
       "解説は後ほど設定します。"
+
   },
 
 
   q9: {
-    label: "Q9",
+
+    label:
+      "Q9",
+
     text:
       "Q9の問題文を設定します",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
+
     images: [],
+
     explanation:
       "解説は後ほど設定します。"
+
   },
 
 
   q10: {
-    label: "Q10",
+
+    label:
+      "Q10",
+
     text:
       "徳重社長がトップメッセージで紹介している絵の名前は？",
+
     choices: [
       "選択肢A",
       "選択肢B",
       "選択肢C",
       "選択肢D"
     ],
+
     correct: null,
+
     images: [],
+
     explanation:
       "解説は後ほど設定します。"
+
   }
 
 };
 
 
-/* ==============================
+/* =========================
    DOM
-============================== */
+========================= */
 
 const screens =
   document.querySelectorAll(".screen");
+
+const questionScreen =
+  document.getElementById("questionScreen");
 
 const questionLabel =
   document.getElementById("questionLabel");
@@ -937,22 +1063,26 @@ const rankingList =
   document.getElementById("rankingList");
 
 
-/* ==============================
+/* =========================
    状態
-============================== */
+========================= */
 
 let teams = {};
+
 let scores = {};
+
 let currentQuestionKey = null;
+
 let currentAnswers = {};
 
 let unsubscribeAnswers = null;
+
 let timerInterval = null;
 
 
-/* ==============================
+/* =========================
    画面切替
-============================== */
+========================= */
 
 function showScreen(id) {
 
@@ -961,19 +1091,23 @@ function showScreen(id) {
       screen.classList.remove("active")
   );
 
+
   const target =
     document.getElementById(id);
 
+
   if (target) {
+
     target.classList.add("active");
+
   }
 
 }
 
 
-/* ==============================
-   チーム監視
-============================== */
+/* =========================
+   チーム
+========================= */
 
 onValue(
   ref(database, "teams"),
@@ -989,9 +1123,9 @@ onValue(
 );
 
 
-/* ==============================
-   得点監視
-============================== */
+/* =========================
+   得点
+========================= */
 
 onValue(
   ref(database, "scores"),
@@ -1005,9 +1139,9 @@ onValue(
 );
 
 
-/* ==============================
-   GAME監視
-============================== */
+/* =========================
+   GAME
+========================= */
 
 onValue(
   ref(database, "game"),
@@ -1017,6 +1151,7 @@ onValue(
     const game =
       snapshot.val();
 
+
     if (!game) {
 
       showScreen(
@@ -1024,19 +1159,18 @@ onValue(
       );
 
       return;
+
     }
 
 
-    /*
-      新しく追加する
-      スライド3種類
-    */
+    /* スライド */
 
     if (
       game.phase === "slide"
     ) {
 
       stopTimer();
+
       stopAnswerWatch();
 
 
@@ -1063,8 +1197,7 @@ onValue(
 
 
       else if (
-        game.slide ===
-        "practiceIntro"
+        game.slide === "practiceIntro"
       ) {
 
         showScreen(
@@ -1079,11 +1212,14 @@ onValue(
     }
 
 
+    /* 待機 */
+
     if (
       game.phase === "waiting"
     ) {
 
       stopTimer();
+
       stopAnswerWatch();
 
       showScreen(
@@ -1095,6 +1231,8 @@ onValue(
     }
 
 
+    /* 問題 */
+
     if (
       game.phase === "question"
     ) {
@@ -1102,17 +1240,21 @@ onValue(
       currentQuestionKey =
         game.currentQuestion;
 
+
       renderQuestion(
         currentQuestionKey
       );
+
 
       watchAnswers(
         currentQuestionKey
       );
 
+
       startSyncedTimer(
         game.startedAt
       );
+
 
       showScreen(
         "questionScreen"
@@ -1123,6 +1265,8 @@ onValue(
     }
 
 
+    /* 正解 */
+
     if (
       game.phase === "result"
     ) {
@@ -1130,15 +1274,19 @@ onValue(
       currentQuestionKey =
         game.currentQuestion;
 
+
       stopTimer();
+
 
       renderResult(
         currentQuestionKey
       );
 
+
       watchAnswers(
         currentQuestionKey
       );
+
 
       showScreen(
         "resultScreen"
@@ -1149,11 +1297,14 @@ onValue(
     }
 
 
+    /* 中間ランキング */
+
     if (
       game.phase === "ranking"
     ) {
 
       stopTimer();
+
       stopAnswerWatch();
 
       renderRanking();
@@ -1167,11 +1318,14 @@ onValue(
     }
 
 
+    /* 最終 */
+
     if (
       game.phase === "final"
     ) {
 
       stopTimer();
+
       stopAnswerWatch();
 
       showScreen(
@@ -1186,14 +1340,15 @@ onValue(
 );
 
 
-/* ==============================
+/* =========================
    問題表示
-============================== */
+========================= */
 
 function renderQuestion(key) {
 
   const question =
     questions[key];
+
 
   if (!question) {
     return;
@@ -1208,21 +1363,37 @@ function renderQuestion(key) {
     question.text;
 
 
-  /*
-    画像
-  */
-
   questionImages.innerHTML =
     "";
+
 
   questionImages.classList.remove(
     "one-image"
   );
 
 
+  questionScreen.classList.remove(
+    "no-image"
+  );
+
+
+  const imageList =
+    question.images || [];
+
+
   if (
-    question.images &&
-    question.images.length === 1
+    imageList.length === 0
+  ) {
+
+    questionScreen.classList.add(
+      "no-image"
+    );
+
+  }
+
+
+  if (
+    imageList.length === 1
   ) {
 
     questionImages.classList.add(
@@ -1232,37 +1403,48 @@ function renderQuestion(key) {
   }
 
 
-  if (question.images) {
+  imageList.forEach(
+    src => {
 
-    question.images.forEach(
-      src => {
-
-        const img =
-          document.createElement(
-            "img"
-          );
-
-        img.src = src;
-
-        img.alt =
-          "問題画像";
-
-        questionImages.appendChild(
-          img
-        );
-
-      }
-    );
-
-  }
+      const img =
+        document.createElement("img");
 
 
-  /*
-    選択肢
-  */
+      img.src =
+        src;
+
+
+      img.alt =
+        `${question.label} 問題画像`;
+
+
+      /*
+        画像が読めなかった場合は
+        壊れた画像アイコンを出さない
+      */
+
+      img.addEventListener(
+        "error",
+        () => {
+
+          img.style.display =
+            "none";
+
+        }
+      );
+
+
+      questionImages.appendChild(
+        img
+      );
+
+    }
+  );
+
 
   choices.innerHTML =
     "";
+
 
   const letters =
     ["A", "B", "C", "D"];
@@ -1272,15 +1454,36 @@ function renderQuestion(key) {
     (choice, index) => {
 
       const div =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
+
 
       div.className =
         "choice";
 
-      div.innerHTML =
-        `<span class="choice-letter">${letters[index]}</span>${escapeHtml(choice)}`;
+
+      const letter =
+        document.createElement("span");
+
+
+      letter.className =
+        "choice-letter";
+
+
+      letter.textContent =
+        letters[index];
+
+
+      div.appendChild(
+        letter
+      );
+
+
+      div.appendChild(
+        document.createTextNode(
+          choice
+        )
+      );
+
 
       choices.appendChild(
         div
@@ -1292,13 +1495,19 @@ function renderQuestion(key) {
 }
 
 
-/* ==============================
+/* =========================
    回答監視
-============================== */
+========================= */
 
 function watchAnswers(key) {
 
   stopAnswerWatch();
+
+
+  currentAnswers = {};
+
+
+  updateAnswerCounter();
 
 
   unsubscribeAnswers =
@@ -1314,24 +1523,17 @@ function watchAnswers(key) {
         currentAnswers =
           snapshot.val() || {};
 
+
         updateAnswerCounter();
 
 
-        /*
-          正解画面を表示中なら
-          分布もリアルタイム更新
-        */
-
-        const resultScreen =
-          document.getElementById(
-            "resultScreen"
-          );
-
-
         if (
-          resultScreen.classList.contains(
-            "active"
-          )
+          document
+            .getElementById(
+              "resultScreen"
+            )
+            .classList
+            .contains("active")
         ) {
 
           renderDistribution(
@@ -1349,7 +1551,9 @@ function watchAnswers(key) {
 
 function stopAnswerWatch() {
 
-  if (unsubscribeAnswers) {
+  if (
+    unsubscribeAnswers
+  ) {
 
     unsubscribeAnswers();
 
@@ -1368,6 +1572,7 @@ function updateAnswerCounter() {
       currentAnswers
     ).length;
 
+
   const total =
     Object.keys(
       teams
@@ -1380,9 +1585,9 @@ function updateAnswerCounter() {
 }
 
 
-/* ==============================
+/* =========================
    タイマー
-============================== */
+========================= */
 
 function startSyncedTimer(
   startedAt
@@ -1451,11 +1656,14 @@ function startSyncedTimer(
 
 function stopTimer() {
 
-  if (timerInterval) {
+  if (
+    timerInterval
+  ) {
 
     clearInterval(
       timerInterval
     );
+
 
     timerInterval =
       null;
@@ -1465,14 +1673,15 @@ function stopTimer() {
 }
 
 
-/* ==============================
+/* =========================
    正解発表
-============================== */
+========================= */
 
 function renderResult(key) {
 
   const question =
     questions[key];
+
 
   if (!question) {
     return;
@@ -1491,7 +1700,9 @@ function renderResult(key) {
     correctAnswer.textContent =
       "正解未設定";
 
-  } else {
+  }
+
+  else {
 
     correctAnswer.textContent =
       `${letters[question.correct]}　${question.choices[question.correct]}`;
@@ -1503,19 +1714,22 @@ function renderResult(key) {
     question.explanation || "";
 
 
-  renderDistribution(key);
+  renderDistribution(
+    key
+  );
 
 }
 
 
-/* ==============================
+/* =========================
    回答分布
-============================== */
+========================= */
 
 function renderDistribution(key) {
 
   const question =
     questions[key];
+
 
   if (!question) {
     return;
@@ -1523,7 +1737,7 @@ function renderDistribution(key) {
 
 
   const counts =
-    [0,0,0,0];
+    [0, 0, 0, 0];
 
 
   Object.values(
@@ -1558,16 +1772,15 @@ function renderDistribution(key) {
 
 
   const letters =
-    ["A","B","C","D"];
+    ["A", "B", "C", "D"];
 
 
   counts.forEach(
     (count, index) => {
 
       const row =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
+
 
       row.className =
         "distribution-row";
@@ -1575,8 +1788,7 @@ function renderDistribution(key) {
 
       const percentage =
         (
-          count /
-          max
+          count / max
         ) * 100;
 
 
@@ -1608,49 +1820,52 @@ function renderDistribution(key) {
 }
 
 
-/* ==============================
+/* =========================
    中間ランキング
-============================== */
+========================= */
 
 function renderRanking() {
 
   const ranking =
-    Object.entries(teams)
-      .map(
-        ([teamId, team]) => {
+    Object.entries(
+      teams
+    ).map(
+      ([teamId, team]) => {
 
-          const teamScores =
-            scores[teamId] || {};
-
-
-          const total =
-            Object.values(
-              teamScores
-            ).reduce(
-              (sum, value) =>
-                sum +
-                Number(
-                  value || 0
-                ),
-              0
-            );
+        const teamScores =
+          scores[teamId] || {};
 
 
-          return {
-            name:
-              team.name,
+        const total =
+          Object.values(
+            teamScores
+          ).reduce(
+            (sum, value) =>
+              sum +
+              Number(
+                value || 0
+              ),
+            0
+          );
 
+
+        return {
+
+          name:
+            team.name,
+
+          total:
             total
-          };
 
-        }
-      );
+        };
+
+      }
+    );
 
 
   ranking.sort(
-    (a,b) =>
-      b.total -
-      a.total
+    (a, b) =>
+      b.total - a.total
   );
 
 
@@ -1662,28 +1877,54 @@ function renderRanking() {
     (team, index) => {
 
       const div =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
 
       div.className =
         "ranking-row";
 
 
-      div.innerHTML = `
-        <div class="ranking-position">
-          ${index + 1}位
-        </div>
+      const position =
+        document.createElement("div");
 
-        <div class="ranking-name">
-          ${escapeHtml(team.name)}
-        </div>
+      position.className =
+        "ranking-position";
 
-        <div class="ranking-score">
-          ${team.total.toLocaleString()} pt
-        </div>
-      `;
+      position.textContent =
+        `${index + 1}位`;
+
+
+      const name =
+        document.createElement("div");
+
+      name.className =
+        "ranking-name";
+
+      name.textContent =
+        team.name;
+
+
+      const score =
+        document.createElement("div");
+
+      score.className =
+        "ranking-score";
+
+      score.textContent =
+        `${team.total.toLocaleString()} pt`;
+
+
+      div.appendChild(
+        position
+      );
+
+      div.appendChild(
+        name
+      );
+
+      div.appendChild(
+        score
+      );
 
 
       rankingList.appendChild(
@@ -1692,22 +1933,6 @@ function renderRanking() {
 
     }
   );
-
-}
-
-
-/* ==============================
-   HTML安全化
-============================== */
-
-function escapeHtml(value) {
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
 
 }
 
