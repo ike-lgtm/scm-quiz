@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCM QUIZ</title>
 
+  <!-- ========================================
+       問題画像を事前読み込み
+  ======================================== -->
+
+  <link rel="preload" as="image" href="images/01.png">
+  <link rel="preload" as="image" href="images/03.png">
+  <link rel="preload" as="image" href="images/04.png">
+  <link rel="preload" as="image" href="images/05.png">
+  <link rel="preload" as="image" href="images/06.png">
+
   <style>
     * {
       box-sizing: border-box;
@@ -223,7 +233,6 @@
     .join-divider {
       width: min(82vw, 1050px);
       height: 1px;
-
       background: #444;
 
       margin:
@@ -311,7 +320,7 @@
 
 
     /* ========================================
-       問題画面
+       問題
     ======================================== */
 
     #questionScreen {
@@ -471,16 +480,13 @@
         clamp(16px, 1.5vw, 24px);
 
       font-weight: 800;
-
       opacity: .7;
 
       flex: 0 0 auto;
     }
 
 
-    /* ========================================
-       画像なし問題
-    ======================================== */
+    /* 画像なし問題 */
 
     #questionScreen.no-image .question-text {
       font-size: clamp(34px, 4vw, 62px);
@@ -560,11 +566,8 @@
     .bar {
       height: 100%;
       width: 0%;
-
       background: #fff;
-
       border-radius: 999px;
-
       transition: width .6s ease;
     }
 
@@ -694,7 +697,7 @@
 
 
     /* ========================================
-       Windows / 高さの低いPC対策
+       Windows / 高さが低い画面
     ======================================== */
 
     @media (max-height: 800px) {
@@ -725,7 +728,6 @@
         width: 40px;
         height: 40px;
         min-width: 40px;
-
         font-size: 16px;
       }
 
@@ -849,18 +851,12 @@
   </style>
 </head>
 
-
 <body>
 
 
-<!-- ========================================
-     タイトル
-======================================== -->
+<!-- タイトル -->
 
-<section
-  id="titleScreen"
-  class="screen"
->
+<section id="titleScreen" class="screen">
 
   <div class="eyebrow">
     SCM SPECIAL EVENT
@@ -883,14 +879,9 @@
 </section>
 
 
-<!-- ========================================
-     RULES
-======================================== -->
+<!-- RULES -->
 
-<section
-  id="rulesScreen"
-  class="screen"
->
+<section id="rulesScreen" class="screen">
 
   <div class="slide-title">
     RULES
@@ -898,62 +889,38 @@
 
   <div class="rules-box">
 
-
     <!-- 左：1〜4 -->
 
     <div class="rules-column">
 
       <div class="rule">
-
-        <div class="rule-number">
-          1
-        </div>
-
+        <div class="rule-number">1</div>
         <div>
           1チーム
           <strong>6〜7名</strong>
         </div>
-
       </div>
 
-
       <div class="rule">
-
-        <div class="rule-number">
-          2
-        </div>
-
+        <div class="rule-number">2</div>
         <div>
           チームで相談して回答を決定
         </div>
-
       </div>
 
-
       <div class="rule">
-
-        <div class="rule-number">
-          3
-        </div>
-
+        <div class="rule-number">3</div>
         <div>
           代表者1名がスマホから回答
         </div>
-
       </div>
 
-
       <div class="rule">
-
-        <div class="rule-number">
-          4
-        </div>
-
+        <div class="rule-number">4</div>
         <div>
           回答時間は各問題
           <strong>45秒</strong>
         </div>
-
       </div>
 
     </div>
@@ -964,45 +931,28 @@
     <div class="rules-column">
 
       <div class="rule">
-
-        <div class="rule-number">
-          5
-        </div>
-
+        <div class="rule-number">5</div>
         <div>
           正解
           <strong>500pt</strong>
           ＋ 早押しボーナス
           <strong>最大500pt</strong>
         </div>
-
       </div>
 
-
       <div class="rule">
-
-        <div class="rule-number">
-          6
-        </div>
-
+        <div class="rule-number">6</div>
         <div>
           1問最大
           <strong>1,000pt</strong>
         </div>
-
       </div>
 
-
       <div class="rule">
-
-        <div class="rule-number">
-          7
-        </div>
-
+        <div class="rule-number">7</div>
         <div>
           全10問の合計得点で順位決定！
         </div>
-
       </div>
 
     </div>
@@ -1012,14 +962,9 @@
 </section>
 
 
-<!-- ========================================
-     参加案内
-======================================== -->
+<!-- 参加案内 -->
 
-<section
-  id="joinIntroScreen"
-  class="screen"
->
+<section id="joinIntroScreen" class="screen">
 
   <div class="join-eyebrow">
     JOIN THE QUIZ
@@ -1031,56 +976,34 @@
 
   <div class="join-steps">
 
-
     <div class="join-step">
-
-      <div class="join-number">
-        1
-      </div>
-
+      <div class="join-number">1</div>
       <div>
         手元のQRコードを読み取る
       </div>
-
     </div>
 
-
     <div class="join-step">
-
-      <div class="join-number">
-        2
-      </div>
-
+      <div class="join-number">2</div>
       <div>
         チーム名を入力する
       </div>
-
     </div>
 
-
     <div class="join-step">
-
-      <div class="join-number">
-        3
-      </div>
-
+      <div class="join-number">3</div>
       <div>
         「参加する」をタップ
       </div>
-
     </div>
-
 
   </div>
 
-
   <div class="join-divider"></div>
-
 
   <div class="join-important">
     チームの代表者1名のみ操作してください
   </div>
-
 
   <div class="join-wait">
     入力できたら、そのままお待ちください
@@ -1089,14 +1012,9 @@
 </section>
 
 
-<!-- ========================================
-     練習問題案内
-======================================== -->
+<!-- 練習案内 -->
 
-<section
-  id="practiceIntroScreen"
-  class="screen"
->
+<section id="practiceIntroScreen" class="screen">
 
   <div class="eyebrow">
     PRACTICE
@@ -1117,14 +1035,9 @@
 </section>
 
 
-<!-- ========================================
-     待機
-======================================== -->
+<!-- 待機 -->
 
-<section
-  id="waitingScreen"
-  class="screen active"
->
+<section id="waitingScreen" class="screen active">
 
   <div class="waiting-title">
     SCM QUIZ
@@ -1141,14 +1054,9 @@
 </section>
 
 
-<!-- ========================================
-     問題
-======================================== -->
+<!-- 問題 -->
 
-<section
-  id="questionScreen"
-  class="screen"
->
+<section id="questionScreen" class="screen">
 
   <div class="question-top">
 
@@ -1168,24 +1076,20 @@
 
   </div>
 
-
   <div
     id="questionText"
     class="question-text"
   ></div>
-
 
   <div
     id="questionImages"
     class="question-images"
   ></div>
 
-
   <div
     id="choices"
     class="choices"
   ></div>
-
 
   <div
     id="answerCounter"
@@ -1197,14 +1101,9 @@
 </section>
 
 
-<!-- ========================================
-     正解
-======================================== -->
+<!-- 正解発表 -->
 
-<section
-  id="resultScreen"
-  class="screen"
->
+<section id="resultScreen" class="screen">
 
   <div class="result-heading">
     正解発表
@@ -1228,14 +1127,9 @@
 </section>
 
 
-<!-- ========================================
-     中間ランキング
-======================================== -->
+<!-- 中間ランキング -->
 
-<section
-  id="rankingScreen"
-  class="screen"
->
+<section id="rankingScreen" class="screen">
 
   <div class="ranking-title">
     🏆 中間ランキング 🏆
@@ -1249,14 +1143,9 @@
 </section>
 
 
-<!-- ========================================
-     最終
-======================================== -->
+<!-- FINAL -->
 
-<section
-  id="finalScreen"
-  class="screen"
->
+<section id="finalScreen" class="screen">
 
   <div class="final-small">
     FINAL
@@ -1320,6 +1209,35 @@ const app =
 
 const database =
   getDatabase(app);
+
+
+/* ========================================
+   画像をページ起動時にキャッシュ
+======================================== */
+
+const preloadImageSources = [
+  "images/01.png",
+  "images/03.png",
+  "images/04.png",
+  "images/05.png",
+  "images/06.png"
+];
+
+const preloadedImages = [];
+
+preloadImageSources.forEach(src => {
+
+  const img =
+    new Image();
+
+  img.src =
+    src;
+
+  preloadedImages.push(
+    img
+  );
+
+});
 
 
 /* ========================================
