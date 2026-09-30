@@ -56,6 +56,7 @@
       margin: 3vh 0;
     }
 
+
     /* ========================================
        タイトル
     ======================================== */
@@ -86,6 +87,7 @@
       margin-top: 2vh;
       opacity: .75;
     }
+
 
     /* ========================================
        RULES
@@ -154,6 +156,97 @@
       font-weight: 950;
     }
 
+
+    /* ========================================
+       参加案内
+    ======================================== */
+
+    #joinIntroScreen {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .join-eyebrow {
+      font-size: clamp(17px, 1.8vw, 27px);
+      font-weight: 850;
+      letter-spacing: .2em;
+      opacity: .55;
+      margin-bottom: 2vh;
+    }
+
+    .join-title {
+      font-size: clamp(46px, 5.5vw, 82px);
+      font-weight: 950;
+      line-height: 1.1;
+      margin-bottom: clamp(30px, 5vh, 60px);
+    }
+
+    .join-steps {
+      width: min(82vw, 1050px);
+
+      display: flex;
+      flex-direction: column;
+
+      gap: clamp(18px, 2.5vh, 30px);
+
+      text-align: left;
+    }
+
+    .join-step {
+      display: flex;
+      align-items: center;
+
+      gap: clamp(20px, 2vw, 30px);
+
+      font-size: clamp(24px, 2.5vw, 40px);
+      font-weight: 800;
+    }
+
+    .join-number {
+      width: clamp(52px, 4.5vw, 70px);
+      height: clamp(52px, 4.5vw, 70px);
+      min-width: clamp(52px, 4.5vw, 70px);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 3px solid #fff;
+      border-radius: 50%;
+
+      font-size: clamp(20px, 2vw, 30px);
+      font-weight: 950;
+    }
+
+    .join-divider {
+      width: min(82vw, 1050px);
+      height: 1px;
+
+      background: #444;
+
+      margin:
+        clamp(30px, 4vh, 50px)
+        auto
+        clamp(22px, 3vh, 36px);
+    }
+
+    .join-important {
+      font-size: clamp(27px, 3vw, 46px);
+      font-weight: 950;
+    }
+
+    .join-wait {
+      margin-top: clamp(14px, 2vh, 24px);
+
+      font-size: clamp(18px, 2vw, 30px);
+      font-weight: 700;
+
+      opacity: .65;
+    }
+
+
     /* ========================================
        練習問題案内
     ======================================== */
@@ -187,6 +280,7 @@
       font-weight: 800;
     }
 
+
     /* ========================================
        待機
     ======================================== */
@@ -214,6 +308,7 @@
       font-size: clamp(17px, 1.8vw, 26px);
       opacity: .55;
     }
+
 
     /* ========================================
        問題画面
@@ -272,6 +367,7 @@
       flex: 0 0 auto;
     }
 
+
     /* ========================================
        問題画像
     ======================================== */
@@ -321,6 +417,7 @@
     .question-images:empty {
       display: none;
     }
+
 
     /* ========================================
        選択肢
@@ -380,6 +477,7 @@
       flex: 0 0 auto;
     }
 
+
     /* ========================================
        画像なし問題
     ======================================== */
@@ -405,6 +503,7 @@
         clamp(21px, 2.2vw, 34px);
     }
 
+
     /* ========================================
        正解発表
     ======================================== */
@@ -416,9 +515,7 @@
     }
 
     .result-heading {
-      font-size:
-        clamp(24px, 2.8vw, 42px);
-
+      font-size: clamp(24px, 2.8vw, 42px);
       font-weight: 850;
       opacity: .6;
     }
@@ -426,9 +523,7 @@
     .correct-answer {
       margin-top: 1.5vh;
 
-      font-size:
-        clamp(38px, 4.8vw, 72px);
-
+      font-size: clamp(38px, 4.8vw, 72px);
       font-weight: 950;
       text-align: center;
     }
@@ -436,13 +531,11 @@
     .distribution {
       width: min(100%, 1050px);
 
-      margin-top:
-        clamp(20px, 3vh, 35px);
+      margin-top: clamp(20px, 3vh, 35px);
 
       display: grid;
 
-      gap:
-        clamp(8px, 1.3vh, 14px);
+      gap: clamp(8px, 1.3vh, 14px);
     }
 
     .distribution-row {
@@ -453,20 +546,14 @@
     }
 
     .distribution-letter {
-      font-size:
-        clamp(20px, 2vw, 28px);
-
+      font-size: clamp(20px, 2vw, 28px);
       font-weight: 950;
     }
 
     .bar-track {
-      height:
-        clamp(24px, 3vh, 32px);
-
+      height: clamp(24px, 3vh, 32px);
       background: #222;
-
       border-radius: 999px;
-
       overflow: hidden;
     }
 
@@ -478,14 +565,11 @@
 
       border-radius: 999px;
 
-      transition:
-        width .6s ease;
+      transition: width .6s ease;
     }
 
     .distribution-number {
-      font-size:
-        clamp(19px, 1.8vw, 26px);
-
+      font-size: clamp(19px, 1.8vw, 26px);
       font-weight: 850;
       text-align: right;
     }
@@ -493,27 +577,24 @@
     .explanation {
       width: min(100%, 1200px);
 
-      margin-top:
-        clamp(20px, 3vh, 35px);
+      margin-top: clamp(20px, 3vh, 35px);
 
       padding:
         clamp(15px, 2vh, 24px)
         clamp(20px, 2vw, 32px);
 
-      border-top:
-        1px solid #444;
+      border-top: 1px solid #444;
 
       text-align: center;
 
       white-space: pre-line;
 
-      font-size:
-        clamp(17px, 1.8vw, 27px);
-
+      font-size: clamp(17px, 1.8vw, 27px);
       line-height: 1.5;
 
       font-weight: 650;
     }
+
 
     /* ========================================
        中間ランキング
@@ -525,24 +606,16 @@
     }
 
     .ranking-title {
-      font-size:
-        clamp(38px, 4.8vw, 70px);
-
+      font-size: clamp(38px, 4.8vw, 70px);
       font-weight: 950;
-
-      margin:
-        0
-        0
-        clamp(18px, 2.5vh, 30px);
+      margin: 0 0 clamp(18px, 2.5vh, 30px);
     }
 
     .ranking-list {
       width: min(100%, 1500px);
 
       display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
+      grid-template-columns: 1fr 1fr;
 
       gap:
         clamp(7px, 1vh, 11px)
@@ -569,8 +642,7 @@
         clamp(7px, 1vh, 11px)
         clamp(12px, 1.5vw, 20px);
 
-      font-size:
-        clamp(14px, 1.35vw, 22px);
+      font-size: clamp(14px, 1.35vw, 22px);
     }
 
     .ranking-position {
@@ -589,6 +661,7 @@
       font-weight: 950;
     }
 
+
     /* ========================================
        FINAL
     ======================================== */
@@ -601,33 +674,24 @@
     }
 
     .final-small {
-      font-size:
-        clamp(22px, 2.8vw, 40px);
-
+      font-size: clamp(22px, 2.8vw, 40px);
       font-weight: 850;
-
       letter-spacing: .2em;
-
       opacity: .55;
     }
 
     .final-title {
-      font-size:
-        clamp(60px, 8vw, 125px);
-
+      font-size: clamp(60px, 8vw, 125px);
       font-weight: 950;
-
       margin-top: 2vh;
     }
 
     .final-note {
-      font-size:
-        clamp(20px, 2.3vw, 34px);
-
+      font-size: clamp(20px, 2.3vw, 34px);
       margin-top: 3vh;
-
       opacity: .7;
     }
+
 
     /* ========================================
        Windows / 高さの低いPC対策
@@ -641,9 +705,7 @@
       }
 
       .slide-title {
-        font-size:
-          clamp(34px, 4vw, 54px);
-
+        font-size: clamp(34px, 4vw, 54px);
         margin-bottom: 30px;
       }
 
@@ -656,8 +718,7 @@
       }
 
       .rule {
-        font-size:
-          clamp(16px, 1.55vw, 24px);
+        font-size: clamp(16px, 1.55vw, 24px);
       }
 
       .rule-number {
@@ -668,10 +729,36 @@
         font-size: 16px;
       }
 
-      .question-text {
-        font-size:
-          clamp(25px, 2.7vw, 43px);
+      .join-title {
+        font-size: clamp(38px, 4.8vw, 66px);
+        margin-bottom: 30px;
+      }
 
+      .join-steps {
+        gap: 16px;
+      }
+
+      .join-step {
+        font-size: clamp(20px, 2.2vw, 32px);
+      }
+
+      .join-number {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+      }
+
+      .join-divider {
+        margin-top: 28px;
+        margin-bottom: 22px;
+      }
+
+      .join-important {
+        font-size: clamp(23px, 2.6vw, 38px);
+      }
+
+      .question-text {
+        font-size: clamp(25px, 2.7vw, 43px);
         line-height: 1.2;
       }
 
@@ -679,7 +766,6 @@
         width: 74px;
         height: 74px;
         min-width: 74px;
-
         font-size: 30px;
       }
 
@@ -690,15 +776,14 @@
 
       .choice {
         min-height: 60px;
-
-        padding:
-          10px 18px;
+        padding: 10px 18px;
       }
 
       .answer-counter {
         margin-top: 5px;
       }
     }
+
 
     @media (max-height: 650px) {
 
@@ -707,16 +792,46 @@
       }
 
       .rule {
-        font-size:
-          clamp(14px, 1.4vw, 20px);
+        font-size: clamp(14px, 1.4vw, 20px);
       }
 
       .rule-number {
         width: 34px;
         height: 34px;
         min-width: 34px;
-
         font-size: 14px;
+      }
+
+      .join-title {
+        margin-bottom: 20px;
+      }
+
+      .join-steps {
+        gap: 10px;
+      }
+
+      .join-step {
+        font-size: clamp(17px, 1.9vw, 27px);
+      }
+
+      .join-number {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 18px;
+      }
+
+      .join-divider {
+        margin-top: 20px;
+        margin-bottom: 16px;
+      }
+
+      .join-important {
+        font-size: clamp(20px, 2.3vw, 32px);
+      }
+
+      .join-wait {
+        margin-top: 10px;
       }
 
       .question-images img,
@@ -726,17 +841,14 @@
 
       .choice {
         min-height: 52px;
-
-        padding:
-          8px 16px;
-
-        font-size:
-          clamp(16px, 1.5vw, 24px);
+        padding: 8px 16px;
+        font-size: clamp(16px, 1.5vw, 24px);
       }
     }
 
   </style>
 </head>
+
 
 <body>
 
@@ -895,6 +1007,83 @@
 
     </div>
 
+  </div>
+
+</section>
+
+
+<!-- ========================================
+     参加案内
+======================================== -->
+
+<section
+  id="joinIntroScreen"
+  class="screen"
+>
+
+  <div class="join-eyebrow">
+    JOIN THE QUIZ
+  </div>
+
+  <div class="join-title">
+    スマホから参加しよう
+  </div>
+
+  <div class="join-steps">
+
+
+    <div class="join-step">
+
+      <div class="join-number">
+        1
+      </div>
+
+      <div>
+        手元のQRコードを読み取る
+      </div>
+
+    </div>
+
+
+    <div class="join-step">
+
+      <div class="join-number">
+        2
+      </div>
+
+      <div>
+        チーム名を入力する
+      </div>
+
+    </div>
+
+
+    <div class="join-step">
+
+      <div class="join-number">
+        3
+      </div>
+
+      <div>
+        「参加する」をタップ
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="join-divider"></div>
+
+
+  <div class="join-important">
+    チームの代表者1名のみ操作してください
+  </div>
+
+
+  <div class="join-wait">
+    入力できたら、そのままお待ちください
   </div>
 
 </section>
@@ -1423,59 +1612,37 @@ const screens =
   document.querySelectorAll(".screen");
 
 const questionScreen =
-  document.getElementById(
-    "questionScreen"
-  );
+  document.getElementById("questionScreen");
 
 const questionLabel =
-  document.getElementById(
-    "questionLabel"
-  );
+  document.getElementById("questionLabel");
 
 const questionText =
-  document.getElementById(
-    "questionText"
-  );
+  document.getElementById("questionText");
 
 const questionImages =
-  document.getElementById(
-    "questionImages"
-  );
+  document.getElementById("questionImages");
 
 const choices =
-  document.getElementById(
-    "choices"
-  );
+  document.getElementById("choices");
 
 const timer =
-  document.getElementById(
-    "timer"
-  );
+  document.getElementById("timer");
 
 const answerCounter =
-  document.getElementById(
-    "answerCounter"
-  );
+  document.getElementById("answerCounter");
 
 const correctAnswer =
-  document.getElementById(
-    "correctAnswer"
-  );
+  document.getElementById("correctAnswer");
 
 const distribution =
-  document.getElementById(
-    "distribution"
-  );
+  document.getElementById("distribution");
 
 const explanation =
-  document.getElementById(
-    "explanation"
-  );
+  document.getElementById("explanation");
 
 const rankingList =
-  document.getElementById(
-    "rankingList"
-  );
+  document.getElementById("rankingList");
 
 
 /* ========================================
@@ -1499,22 +1666,14 @@ function showScreen(id) {
 
   screens.forEach(
     screen =>
-      screen.classList.remove(
-        "active"
-      )
+      screen.classList.remove("active")
   );
-
 
   const target =
     document.getElementById(id);
 
-
   if (target) {
-
-    target.classList.add(
-      "active"
-    );
-
+    target.classList.add("active");
   }
 
 }
@@ -1526,10 +1685,7 @@ function showScreen(id) {
 
 onValue(
 
-  ref(
-    database,
-    "teams"
-  ),
+  ref(database, "teams"),
 
   snapshot => {
 
@@ -1549,10 +1705,7 @@ onValue(
 
 onValue(
 
-  ref(
-    database,
-    "scores"
-  ),
+  ref(database, "scores"),
 
   snapshot => {
 
@@ -1570,10 +1723,7 @@ onValue(
 
 onValue(
 
-  ref(
-    database,
-    "game"
-  ),
+  ref(database, "game"),
 
   snapshot => {
 
@@ -1625,8 +1775,18 @@ onValue(
 
 
       else if (
-        game.slide ===
-        "practiceIntro"
+        game.slide === "joinIntro"
+      ) {
+
+        showScreen(
+          "joinIntroScreen"
+        );
+
+      }
+
+
+      else if (
+        game.slide === "practiceIntro"
       ) {
 
         showScreen(
@@ -1852,9 +2012,7 @@ function renderQuestion(key) {
     src => {
 
       const img =
-        document.createElement(
-          "img"
-        );
+        document.createElement("img");
 
 
       img.src =
@@ -1901,9 +2059,7 @@ function renderQuestion(key) {
     (choice, index) => {
 
       const div =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
 
       div.className =
@@ -1911,9 +2067,7 @@ function renderQuestion(key) {
 
 
       const letter =
-        document.createElement(
-          "span"
-        );
+        document.createElement("span");
 
 
       letter.className =
