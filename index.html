@@ -4,12 +4,170 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCM QUIZ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f5f7;
+      color: #222;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 24px;
+      padding: 40px 24px;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.10);
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 0 0 8px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 36px;
+    }
+
+    .label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #222;
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    #waitingScreen {
+      display: none;
+    }
+
+    .team-name {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 24px 0;
+    }
+
+    .waiting {
+      color: #666;
+      line-height: 1.8;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>SCM QUIZ</h1>
-  <p>懇親会チーム対抗クイズ</p>
 
-  <button>クイズに参加する</button>
+  <!-- チーム名入力画面 -->
+  <div class="screen" id="joinScreen">
+    <div class="card">
+
+      <h1>SCM QUIZ</h1>
+
+      <p class="subtitle">
+        チームのみんなで相談して挑戦しよう！
+      </p>
+
+      <label class="label">
+        チーム名
+      </label>
+
+      <input
+        type="text"
+        id="teamName"
+        placeholder="チーム名を入力してください"
+        maxlength="20"
+      >
+
+      <button onclick="joinQuiz()">
+        クイズに参加する
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- 待機画面 -->
+  <div class="screen" id="waitingScreen">
+    <div class="card">
+
+      <p>あなたのチーム</p>
+
+      <div
+        class="team-name"
+        id="displayTeamName">
+      </div>
+
+      <h2>参加完了！</h2>
+
+      <p class="waiting">
+        クイズ開始まで<br>
+        そのままお待ちください。
+      </p>
+
+    </div>
+  </div>
+
+
+  <script>
+    function joinQuiz() {
+
+      const teamName =
+        document.getElementById("teamName").value.trim();
+
+      if (teamName === "") {
+        alert("チーム名を入力してください！");
+        return;
+      }
+
+      document.getElementById("displayTeamName").textContent =
+        teamName;
+
+      document.getElementById("joinScreen").style.display =
+        "none";
+
+      document.getElementById("waitingScreen").style.display =
+        "flex";
+    }
+  </script>
+
 </body>
 </html>
