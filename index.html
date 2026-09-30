@@ -157,9 +157,9 @@
 
     .points {
       text-align: center;
-      font-size: 32px;
+      font-size: 36px;
       font-weight: bold;
-      margin: 12px 0;
+      margin: 16px 0;
     }
 
     .correct-answer {
@@ -209,10 +209,7 @@
 
     <h1>SCM QUIZ</h1>
 
-    <div
-      id="waitingTeamName"
-      class="team-name">
-    </div>
+    <div id="waitingTeamName" class="team-name"></div>
 
     <div class="status">
       参加完了！
@@ -234,20 +231,11 @@
   <!-- 問題 -->
   <section id="questionScreen" class="card hidden">
 
-    <div
-      id="questionNumber"
-      class="question-number">
-    </div>
+    <div id="questionNumber" class="question-number"></div>
 
-    <div
-      id="questionText"
-      class="question">
-    </div>
+    <div id="questionText" class="question"></div>
 
-    <div
-      id="questionImages"
-      class="images">
-    </div>
+    <div id="questionImages" class="images"></div>
 
     <div class="timer-label">
       残り時間
@@ -257,10 +245,7 @@
       45
     </div>
 
-    <div
-      id="choices"
-      class="choices">
-    </div>
+    <div id="choices" class="choices"></div>
 
   </section>
 
@@ -284,25 +269,13 @@
   <!-- 正解発表 -->
   <section id="resultScreen" class="card hidden">
 
-    <div
-      id="resultMark"
-      class="result-mark">
-    </div>
+    <div id="resultMark" class="result-mark"></div>
 
-    <div
-      id="resultTitle"
-      class="status">
-    </div>
+    <div id="resultTitle" class="status"></div>
 
-    <div
-      id="resultPoints"
-      class="points">
-    </div>
+    <div id="resultPoints" class="points"></div>
 
-    <div
-      id="correctAnswer"
-      class="correct-answer">
-    </div>
+    <div id="correctAnswer" class="correct-answer"></div>
 
     <p class="small center">
       次の問題までお待ちください。
@@ -367,16 +340,6 @@ const database =
 
 /* ==========================================
    問題データ
-
-   後からここだけ差し替えればOKです。
-
-   images: ["images/q1.jpg"]
-
-   2枚の場合：
-   images: [
-     "images/q5-1.jpg",
-     "images/q5-2.jpg"
-   ]
 ========================================== */
 
 const questions = {
@@ -703,7 +666,6 @@ function showScreen(screen) {
       element.classList.add("hidden")
   );
 
-
   screen.classList.remove("hidden");
 
 }
@@ -711,9 +673,6 @@ function showScreen(screen) {
 
 /* ==========================================
    既存チーム確認
-
-   Firebaseからチームが削除されていたら
-   スマホ側のlocalStorageもリセット
 ========================================== */
 
 async function checkExistingTeam() {
@@ -721,7 +680,6 @@ async function checkExistingTeam() {
   if (!teamId || !teamName) {
 
     showScreen(joinScreen);
-
     return;
 
   }
@@ -744,13 +702,11 @@ async function checkExistingTeam() {
         teamName;
 
       showScreen(waitingScreen);
-
       return;
 
     }
 
 
-    // Firebaseにチームが存在しない
     localStorage.removeItem(
       "scmQuizTeamId"
     );
@@ -763,7 +719,6 @@ async function checkExistingTeam() {
     teamId = null;
     teamName = null;
 
-
     showScreen(joinScreen);
 
 
@@ -774,9 +729,6 @@ async function checkExistingTeam() {
       error
     );
 
-
-    // 通信エラーだけでは
-    // チーム情報を削除しない
     waitingTeamName.textContent =
       teamName;
 
@@ -814,9 +766,7 @@ joinButton.addEventListener(
 
 
     joinButton.disabled = true;
-
-    joinButton.textContent =
-      "参加中...";
+    joinButton.textContent = "参加中...";
 
 
     try {
@@ -837,13 +787,9 @@ joinButton.addEventListener(
       await set(
         newTeamRef,
         {
-
-          name:
-            teamName,
-
+          name: teamName,
           joinedAt:
             serverTimestamp()
-
         }
       );
 
@@ -868,15 +814,16 @@ joinButton.addEventListener(
       );
 
 
+      watchMyTeam();
+
+
     } catch (error) {
 
       console.error(error);
 
-
       alert(
         "参加に失敗しました。もう一度お試しください。"
       );
-
 
       joinButton.disabled = false;
 
@@ -890,15 +837,18 @@ joinButton.addEventListener(
 
 
 /* ==========================================
-   Firebase上のチーム削除監視
-
-   adminから全削除された場合、
-   スマホも参加画面へ戻す
+   チーム削除監視
 ========================================== */
+
+let teamWatcherStarted = false;
 
 function watchMyTeam() {
 
   if (!teamId) return;
+
+  if (teamWatcherStarted) return;
+
+  teamWatcherStarted = true;
 
 
   onValue(
@@ -931,6 +881,8 @@ function watchMyTeam() {
       clearInterval(
         timerInterval
       );
+
+      teamWatcherStarted = false;
 
 
       showScreen(
@@ -975,8 +927,6 @@ onValue(
     }
 
 
-    /* 待機 */
-
     if (
       game.phase === "waiting"
     ) {
@@ -1001,8 +951,6 @@ onValue(
     }
 
 
-    /* 問題 */
-
     if (
       game.phase === "question"
     ) {
@@ -1026,8 +974,6 @@ onValue(
 
     }
 
-
-    /* 正解発表 */
 
     if (
       game.phase === "result"
@@ -1076,8 +1022,6 @@ async function openQuestion(
   );
 
 
-  /* すでに回答済みか確認 */
-
   const answerRef =
     ref(
       database,
@@ -1104,16 +1048,12 @@ async function openQuestion(
   }
 
 
-  /* 問題文 */
-
   questionNumber.textContent =
     question.label;
 
   questionText.textContent =
     question.text;
 
-
-  /* 画像 */
 
   questionImages.innerHTML =
     "";
@@ -1147,13 +1087,10 @@ async function openQuestion(
             "img"
           );
 
-
-        img.src =
-          src;
+        img.src = src;
 
         img.alt =
           "問題画像";
-
 
         questionImages.appendChild(
           img
@@ -1164,8 +1101,6 @@ async function openQuestion(
 
   }
 
-
-  /* 選択肢 */
 
   choicesElement.innerHTML =
     "";
@@ -1183,10 +1118,8 @@ async function openQuestion(
           "button"
         );
 
-
       button.className =
         "choice";
-
 
       button.textContent =
         `${letters[index]}：${choice}`;
@@ -1245,7 +1178,6 @@ function startTimer() {
       () => {
 
         timeLeft--;
-
 
         timer.textContent =
           Math.max(
@@ -1355,7 +1287,6 @@ async function submitAnswer(
     await set(
       answerRef,
       {
-
         teamId:
           teamId,
 
@@ -1367,7 +1298,6 @@ async function submitAnswer(
 
         answeredAt:
           serverTimestamp()
-
       }
     );
 
@@ -1395,7 +1325,7 @@ async function submitAnswer(
 
 
 /* ==========================================
-   正解表示
+   正解発表 + 確定得点表示
 ========================================== */
 
 async function showResult(
@@ -1411,7 +1341,9 @@ async function showResult(
     questions[key];
 
 
-  const snapshot =
+  /* 自分の回答取得 */
+
+  const answerSnapshot =
     await get(
       ref(
         database,
@@ -1421,7 +1353,7 @@ async function showResult(
 
 
   const answer =
-    snapshot.val();
+    answerSnapshot.val();
 
 
   const isCorrect =
@@ -1431,32 +1363,36 @@ async function showResult(
       question.correct;
 
 
-  /* 練習問題 */
+  /* 正誤表示 */
+
+  if (isCorrect) {
+
+    resultMark.textContent =
+      "⭕";
+
+    resultTitle.textContent =
+      "正解！";
+
+  } else {
+
+    resultMark.textContent =
+      "❌";
+
+    resultTitle.textContent =
+      answer
+        ? "残念！"
+        : "時間切れ";
+
+  }
+
+
+  /* ======================================
+     練習問題
+  ====================================== */
 
   if (
     key === "practice"
   ) {
-
-    if (isCorrect) {
-
-      resultMark.textContent =
-        "⭕";
-
-      resultTitle.textContent =
-        "正解！";
-
-    } else {
-
-      resultMark.textContent =
-        "❌";
-
-      resultTitle.textContent =
-        answer
-          ? "残念！"
-          : "時間切れ";
-
-    }
-
 
     resultPoints.textContent =
       "練習問題・得点なし";
@@ -1464,52 +1400,62 @@ async function showResult(
   }
 
 
-  /* 本番問題 */
+  /* ======================================
+     本番問題
+     Firebaseの確定得点を取得
+  ====================================== */
 
   else {
 
-    if (isCorrect) {
+    try {
 
-      resultMark.textContent =
-        "⭕";
+      const scoreSnapshot =
+        await get(
+          ref(
+            database,
+            `scores/${teamId}/${key}`
+          )
+        );
 
-      resultTitle.textContent =
-        "正解！";
 
-    } else {
+      if (
+        scoreSnapshot.exists()
+      ) {
 
-      resultMark.textContent =
-        "❌";
+        const points =
+          Number(
+            scoreSnapshot.val()
+          );
 
-      resultTitle.textContent =
-        answer
-          ? "残念！"
-          : "時間切れ";
+
+        resultPoints.textContent =
+          `+${points.toLocaleString()} pt`;
+
+      } else {
+
+        resultPoints.textContent =
+          "0 pt";
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "得点取得エラー",
+        error
+      );
+
+
+      resultPoints.textContent =
+        "得点確認中";
 
     }
-
-
-    /*
-      正式得点は後ほど
-      admin側で
-
-      問題開始時刻
-      ↓
-      回答時刻
-
-      の差から計算します。
-
-      参加者端末のタイマーを
-      正式得点には使いません。
-    */
-
-    resultPoints.textContent =
-      "得点集計中";
 
   }
 
 
-  /* 正解 */
+  /* 正解表示 */
 
   if (
     question.correct !== null
