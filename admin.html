@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>SCM QUIZ 運営画面</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f5f7;
+      background: #f4f6f8;
       color: #222;
     }
 
     .container {
-      max-width: 900px;
+      width: min(94%, 900px);
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 30px 0 60px;
     }
 
     h1 {
@@ -27,72 +30,121 @@
 
     .subtitle {
       color: #666;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
     }
 
     .stats {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
 
     .stat {
-      background: white;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
     }
 
     .stat-label {
-      color: #666;
       font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
     }
 
     .stat-number {
-      font-size: 42px;
+      font-size: 34px;
       font-weight: bold;
-      margin-top: 6px;
     }
 
-    .panel {
-      background: white;
-      border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    .status {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 8px;
     }
 
-    .start-button {
-      width: 100%;
-      padding: 20px;
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    button {
       border: none;
-      border-radius: 14px;
-      background: #222;
-      color: white;
-      font-size: 20px;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .status {
-      margin-top: 14px;
-      text-align: center;
-      font-weight: bold;
+    .primary {
+      background: #222;
+      color: white;
+    }
+
+    .secondary {
+      background: #e9edf2;
+      color: #222;
+    }
+
+    .result {
+      background: #e7f3ff;
+      color: #075985;
+    }
+
+    .danger {
+      background: #ffe5e5;
+      color: #a40000;
+    }
+
+    button:hover {
+      opacity: 0.88;
     }
 
     .team-list {
+      margin-top: 15px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-      margin-top: 16px;
+      gap: 8px;
     }
 
-    .team {
-      background: #f4f5f7;
-      border-radius: 10px;
-      padding: 12px;
-      font-weight: bold;
+    .team-item {
+      padding: 10px 12px;
+      background: #f7f7f7;
+      border-radius: 8px;
+    }
+
+    .answer-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .answer-item {
+      background: #f7f7f7;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    .notice {
+      font-size: 13px;
+      color: #777;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .button-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -102,56 +154,119 @@
 <div class="container">
 
   <h1>SCM QUIZ 運営画面</h1>
+
   <div class="subtitle">
-    参加状況・クイズ進行管理
+    クイズ進行・回答状況確認
   </div>
 
-  <div class="stats">
 
-    <div class="stat">
-      <div class="stat-label">参加チーム</div>
-      <div class="stat-number">
-        <span id="teamCount">0</span>
+  <!-- 現在の状態 -->
+  <div class="card">
+
+    <h2>現在の状態</h2>
+
+    <div id="gameStatus" class="status">
+      読み込み中...
+    </div>
+
+  </div>
+
+
+  <!-- 数字 -->
+  <div class="card">
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-label">
+          参加チーム
+        </div>
+
+        <div id="teamCount" class="stat-number">
+          0
+        </div>
       </div>
-    </div>
 
-    <div class="stat">
-      <div class="stat-label">Q1 回答済み</div>
-      <div class="stat-number">
-        <span id="answerCount">0</span>
+
+      <div class="stat">
+        <div class="stat-label">
+          現在の問題 回答済み
+        </div>
+
+        <div id="answerCount" class="stat-number">
+          0
+        </div>
       </div>
+
     </div>
 
   </div>
 
-  <div class="panel">
 
-    <h2>クイズ操作</h2>
+  <!-- 操作 -->
+  <div class="card">
 
-    <button
-      class="start-button"
-      id="startQ1"
-    >
-      Q1を開始
-    </button>
+    <h2>進行操作</h2>
 
-    <div
-      class="status"
-      id="quizStatus"
-    >
-      現在：待機中
+    <div class="button-grid">
+
+      <button
+        id="waitingButton"
+        class="secondary">
+        待機画面に戻す
+      </button>
+
+
+      <button
+        id="practiceButton"
+        class="primary">
+        練習問題を開始
+      </button>
+
+
+      <button
+        id="resultButton"
+        class="result">
+        正解を発表
+      </button>
+
+
+      <button
+        id="q1Button"
+        class="primary">
+        Q1を開始
+      </button>
+
+    </div>
+
+    <p class="notice">
+      ※現在は動作確認用として「練習問題」と「Q1」まで実装しています。
+      動作確認後、Q2〜Q10・ランキング・最終発表を追加します。
+    </p>
+
+  </div>
+
+
+  <!-- 回答状況 -->
+  <div class="card">
+
+    <h2>現在の問題の回答状況</h2>
+
+    <div id="answerList" class="answer-list">
+      まだ回答はありません
     </div>
 
   </div>
 
-  <div class="panel">
 
-    <h2>参加チーム一覧</h2>
+  <!-- チーム -->
+  <div class="card">
 
-    <div
-      class="team-list"
-      id="teamList"
-    ></div>
+    <h2>参加チーム</h2>
+
+    <div id="teamList" class="team-list">
+      まだ参加チームはありません
+    </div>
 
   </div>
 
@@ -160,137 +275,478 @@
 
 <script type="module">
 
-  import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-  import {
-    getDatabase,
-    ref,
-    onValue,
-    set
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
+
+  authDomain:
+    "scm-quiz-df0e6.firebaseapp.com",
+
+  databaseURL:
+    "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+  projectId:
+    "scm-quiz-df0e6",
+
+  storageBucket:
+    "scm-quiz-df0e6.firebasestorage.app",
+
+  messagingSenderId:
+    "30616205850",
+
+  appId:
+    "1:30616205850:web:224b6386ee807700d26fa3"
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
+
+
+
+/* =========================
+   DOM
+========================= */
+
+const teamCount =
+  document.getElementById("teamCount");
+
+const answerCount =
+  document.getElementById("answerCount");
+
+const gameStatus =
+  document.getElementById("gameStatus");
+
+const teamList =
+  document.getElementById("teamList");
+
+const answerList =
+  document.getElementById("answerList");
+
+
+const waitingButton =
+  document.getElementById("waitingButton");
+
+const practiceButton =
+  document.getElementById("practiceButton");
+
+const resultButton =
+  document.getElementById("resultButton");
+
+const q1Button =
+  document.getElementById("q1Button");
+
+
+
+let currentQuestion = null;
+
+let teams = {};
+
+
+
+/* =========================
+   TEAM LIST
+========================= */
+
+onValue(
+  ref(database, "teams"),
+  snapshot => {
+
+    teams = snapshot.val() || {};
+
+    const teamArray =
+      Object.entries(teams);
+
+
+    teamCount.textContent =
+      teamArray.length;
+
+
+    teamList.innerHTML = "";
+
+
+    if (teamArray.length === 0) {
+
+      teamList.textContent =
+        "まだ参加チームはありません";
+
+      return;
+
+    }
+
+
+    teamArray.forEach(([id, team], index) => {
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "team-item";
+
+      div.textContent =
+        `${index + 1}. ${team.name}`;
+
+      teamList.appendChild(div);
+
+    });
+
   }
-  from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+);
 
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
-    authDomain: "scm-quiz-df0e6.firebaseapp.com",
-    databaseURL: "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "scm-quiz-df0e6",
-    storageBucket: "scm-quiz-df0e6.firebasestorage.app",
-    messagingSenderId: "30616205850",
-    appId: "1:30616205850:web:224b6386ee807700d26fa3"
-  };
+
+/* =========================
+   GAME STATUS
+========================= */
+
+onValue(
+  ref(database, "game"),
+  snapshot => {
+
+    const game =
+      snapshot.val();
 
 
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
+    if (!game) {
 
+      currentQuestion = null;
 
-  // 参加チーム監視
-  onValue(
-    ref(database, "teams"),
-    (snapshot) => {
+      gameStatus.textContent =
+        "待機中";
 
-      const teams = snapshot.val() || {};
+      watchAnswers(null);
 
-      const teamArray =
-        Object.values(teams);
+      return;
 
-      document.getElementById(
-        "teamCount"
-      ).textContent = teamArray.length;
-
-      const list =
-        document.getElementById("teamList");
-
-      list.innerHTML = "";
-
-      teamArray.forEach(team => {
-
-        const div =
-          document.createElement("div");
-
-        div.className = "team";
-
-        div.textContent = team.name;
-
-        list.appendChild(div);
-      });
     }
-  );
 
 
-  // Q1回答数監視
-  onValue(
-    ref(database, "answers/q1"),
-    (snapshot) => {
+    currentQuestion =
+      game.currentQuestion || null;
 
-      const answers =
-        snapshot.val() || {};
 
-      document.getElementById(
-        "answerCount"
-      ).textContent =
-        Object.keys(answers).length;
+    if (game.phase === "waiting") {
+
+      gameStatus.textContent =
+        "待機中";
+
+      watchAnswers(null);
+
+      return;
+
     }
-  );
 
 
-  // クイズ状態監視
-  onValue(
-    ref(database, "game"),
-    (snapshot) => {
+    if (game.phase === "question") {
 
-      const game =
-        snapshot.val();
+      const label =
+        currentQuestion === "practice"
+        ? "練習問題"
+        : currentQuestion?.toUpperCase();
 
-      if (!game) return;
 
-      if (game.status === "question") {
+      gameStatus.textContent =
+        `${label} 出題中`;
 
-        document.getElementById(
-          "quizStatus"
-        ).textContent =
-          "現在：Q" +
-          game.question +
-          " 出題中";
+      watchAnswers(currentQuestion);
 
-      } else {
+      return;
 
-        document.getElementById(
-          "quizStatus"
-        ).textContent =
-          "現在：待機中";
-      }
     }
-  );
 
 
-  // Q1開始
-  document.getElementById(
-    "startQ1"
-  ).addEventListener(
-    "click",
-    async () => {
+    if (game.phase === "result") {
 
-      const ok =
-        confirm(
-          "全チームにQ1を開始します。よろしいですか？"
-        );
+      const label =
+        currentQuestion === "practice"
+        ? "練習問題"
+        : currentQuestion?.toUpperCase();
 
-      if (!ok) return;
 
-      await set(
-        ref(database, "game"),
-        {
-          status: "question",
-          question: 1,
-          startedAt: Date.now()
+      gameStatus.textContent =
+        `${label} 正解発表中`;
+
+      watchAnswers(currentQuestion);
+
+    }
+
+  }
+);
+
+
+
+/* =========================
+   ANSWERS
+========================= */
+
+let unsubscribeAnswers = null;
+
+
+function watchAnswers(questionKey) {
+
+  if (unsubscribeAnswers) {
+
+    unsubscribeAnswers();
+
+    unsubscribeAnswers = null;
+
+  }
+
+
+  if (!questionKey) {
+
+    answerCount.textContent = "0";
+
+    answerList.textContent =
+      "まだ回答はありません";
+
+    return;
+
+  }
+
+
+  unsubscribeAnswers =
+    onValue(
+      ref(
+        database,
+        `answers/${questionKey}`
+      ),
+
+      snapshot => {
+
+        const answers =
+          snapshot.val() || {};
+
+
+        const answerArray =
+          Object.values(answers);
+
+
+        answerCount.textContent =
+          answerArray.length;
+
+
+        answerList.innerHTML = "";
+
+
+        if (answerArray.length === 0) {
+
+          answerList.textContent =
+            "まだ回答はありません";
+
+          return;
+
         }
+
+
+        const letters =
+          ["A", "B", "C", "D"];
+
+
+        answerArray.forEach(answer => {
+
+          const div =
+            document.createElement("div");
+
+          div.className =
+            "answer-item";
+
+
+          const letter =
+            letters[answer.choice]
+            ?? "-";
+
+
+          div.textContent =
+            `${answer.teamName}：${letter}`;
+
+
+          answerList.appendChild(div);
+
+        });
+
+      }
+    );
+
+}
+
+
+
+/* =========================
+   WAITING
+========================= */
+
+waitingButton.addEventListener(
+  "click",
+  async () => {
+
+    const ok =
+      confirm(
+        "参加者の画面を待機状態に戻しますか？"
       );
+
+
+    if (!ok) return;
+
+
+    await set(
+      ref(database, "game"),
+      {
+
+        phase: "waiting",
+
+        currentQuestion: null,
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+  }
+);
+
+
+
+/* =========================
+   PRACTICE START
+========================= */
+
+practiceButton.addEventListener(
+  "click",
+  async () => {
+
+    const ok =
+      confirm(
+        "練習問題を開始しますか？"
+      );
+
+
+    if (!ok) return;
+
+
+    await set(
+      ref(database, "game"),
+      {
+
+        phase: "question",
+
+        currentQuestion:
+          "practice",
+
+        startedAt:
+          serverTimestamp()
+
+      }
+    );
+
+  }
+);
+
+
+
+/* =========================
+   RESULT
+========================= */
+
+resultButton.addEventListener(
+  "click",
+  async () => {
+
+    if (!currentQuestion) {
+
+      alert(
+        "出題中の問題がありません"
+      );
+
+      return;
+
     }
-  );
+
+
+    const ok =
+      confirm(
+        "正解を発表しますか？"
+      );
+
+
+    if (!ok) return;
+
+
+    await set(
+      ref(database, "game"),
+      {
+
+        phase: "result",
+
+        currentQuestion:
+          currentQuestion,
+
+        revealedAt:
+          serverTimestamp()
+
+      }
+    );
+
+  }
+);
+
+
+
+/* =========================
+   Q1 START
+========================= */
+
+q1Button.addEventListener(
+  "click",
+  async () => {
+
+    const ok =
+      confirm(
+        "Q1を開始しますか？"
+      );
+
+
+    if (!ok) return;
+
+
+    await set(
+      ref(database, "game"),
+      {
+
+        phase: "question",
+
+        currentQuestion:
+          "q1",
+
+        startedAt:
+          serverTimestamp()
+
+      }
+    );
+
+  }
+);
 
 </script>
 
