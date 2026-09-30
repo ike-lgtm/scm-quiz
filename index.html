@@ -6,547 +6,814 @@
   <title>SCM QUIZ</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f5f7;
+      background: #f4f6f8;
       color: #222;
     }
 
-    .screen {
-      min-height: 100vh;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    .container {
+      width: min(92%, 620px);
+      margin: 0 auto;
+      padding: 24px 0 40px;
     }
 
-    #joinScreen { display: flex; }
-
     .card {
-      width: 100%;
-      max-width: 520px;
       background: white;
-      border-radius: 24px;
-      padding: 36px 24px;
-      text-align: center;
-      box-shadow: 0 10px 35px rgba(0,0,0,.10);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
     }
 
     h1 {
-      font-size: 42px;
-      margin: 0 0 8px;
+      text-align: center;
+      margin-bottom: 8px;
     }
 
     .subtitle {
+      text-align: center;
       color: #666;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
     }
 
-    .label {
-      display: block;
-      text-align: left;
-      font-weight: bold;
-      margin-bottom: 8px;
+    .hidden {
+      display: none !important;
     }
 
     input {
       width: 100%;
       padding: 16px;
-      font-size: 18px;
-      border: 2px solid #ddd;
+      border: 1px solid #ccc;
       border-radius: 12px;
-      margin-bottom: 16px;
+      font-size: 18px;
+      margin-bottom: 14px;
     }
 
-    button { cursor: pointer; }
-
-    .main-button {
+    button {
       width: 100%;
-      padding: 16px;
       border: none;
       border-radius: 12px;
-      font-size: 18px;
+      padding: 16px;
+      font-size: 17px;
       font-weight: bold;
-      background: #222;
-      color: white;
+      cursor: pointer;
     }
 
-    .main-button:disabled {
-      opacity: .5;
+    .primary {
+      background: #222;
+      color: white;
     }
 
     .team-name {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
-      margin: 20px 0;
+      text-align: center;
+      margin: 20px 0 8px;
     }
 
-    .waiting-text {
-      color: #666;
-      line-height: 1.8;
-    }
-
-    .quiz-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
+    .center {
+      text-align: center;
     }
 
     .question-number {
+      font-size: 15px;
       font-weight: bold;
-      font-size: 18px;
-    }
-
-    .timer {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: #222;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 26px;
-      font-weight: bold;
-    }
-
-    .question {
-      font-size: 24px;
-      line-height: 1.5;
-      font-weight: bold;
-      margin: 20px 0 30px;
-    }
-
-    .answers {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .answer {
-      min-height: 100px;
-      border: none;
-      border-radius: 16px;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 14px;
-    }
-
-    .answer-a { background: #d83b3b; }
-    .answer-b { background: #2878c8; }
-    .answer-c { background: #d49b16; }
-    .answer-d { background: #32965d; }
-
-    .answer-letter {
-      display: block;
-      font-size: 26px;
-      margin-bottom: 6px;
-    }
-
-    .check {
-      font-size: 60px;
+      color: #666;
       margin-bottom: 10px;
     }
 
-    .selected-answer {
-      margin-top: 24px;
-      padding: 16px;
-      background: #f4f5f7;
-      border-radius: 12px;
+    .question {
+      font-size: 22px;
+      line-height: 1.5;
       font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .images {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .images.two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .images img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #eee;
+    }
+
+    .timer {
+      text-align: center;
+      font-size: 42px;
+      font-weight: bold;
+      margin: 16px 0;
+    }
+
+    .choices {
+      display: grid;
+      gap: 12px;
+    }
+
+    .choice {
+      text-align: left;
+      background: #fff;
+      color: #222;
+      border: 2px solid #ddd;
+    }
+
+    .choice:disabled {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0 10px;
+    }
+
+    .result-mark {
+      text-align: center;
+      font-size: 56px;
+      margin-bottom: 8px;
+    }
+
+    .points {
+      text-align: center;
+      font-size: 34px;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    .correct-answer {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .small {
+      color: #777;
+      font-size: 14px;
+      line-height: 1.6;
     }
   </style>
 </head>
 
 <body>
 
-<!-- 参加画面 -->
-<div class="screen" id="joinScreen">
-  <div class="card">
+<div class="container">
 
+  <!-- JOIN -->
+  <section id="joinScreen" class="card">
     <h1>SCM QUIZ</h1>
-
-    <p class="subtitle">
-      第一回 部署横断！チーム対抗クイズ！
-    </p>
-
-    <label class="label">チーム名</label>
+    <div class="subtitle">第一回 部署横断！チーム対抗クイズ！</div>
 
     <input
+      id="teamNameInput"
       type="text"
-      id="teamName"
-      placeholder="チーム名を入力してください"
-      maxlength="20"
+      maxlength="30"
+      placeholder="チーム名を入力"
     >
 
-    <button class="main-button" id="joinButton">
+    <button id="joinButton" class="primary">
       クイズに参加する
     </button>
-
-  </div>
-</div>
+  </section>
 
 
-<!-- 待機画面 -->
-<div class="screen" id="waitingScreen">
-  <div class="card">
+  <!-- WAITING -->
+  <section id="waitingScreen" class="card hidden">
+    <h1>SCM QUIZ</h1>
 
-    <p>あなたのチーム</p>
+    <div class="team-name" id="waitingTeamName"></div>
 
-    <div class="team-name" id="displayTeamName"></div>
+    <div class="status">参加完了！</div>
 
-    <h2>参加完了！</h2>
-
-    <p class="waiting-text">
+    <p class="center">
       クイズ開始まで<br>
-      そのままお待ちください。
+      この画面のままお待ちください。
     </p>
 
-  </div>
-</div>
+    <p class="small center">
+      運営が問題を開始すると、自動的に画面が切り替わります。
+    </p>
+  </section>
 
 
-<!-- Q1 -->
-<div class="screen" id="quizScreen">
-  <div class="card">
+  <!-- QUESTION -->
+  <section id="questionScreen" class="card hidden">
 
-    <div class="quiz-header">
+    <div id="questionNumber" class="question-number"></div>
 
-      <div class="question-number">
-        Q1
-      </div>
+    <div id="questionText" class="question"></div>
 
-      <div class="timer" id="timer">
-        45
-      </div>
+    <div id="questionImages" class="images"></div>
 
+    <div id="timer" class="timer">45</div>
+
+    <div id="choices" class="choices"></div>
+
+  </section>
+
+
+  <!-- ANSWERED -->
+  <section id="answeredScreen" class="card hidden">
+
+    <h1>回答完了！</h1>
+
+    <div class="status">
+      回答を受け付けました
     </div>
 
-    <div class="question">
-      SCM QUIZの制限時間は？
-    </div>
-
-    <div class="answers">
-
-      <button class="answer answer-a"
-        data-letter="A"
-        data-text="15秒">
-        <span class="answer-letter">A</span>
-        15秒
-      </button>
-
-      <button class="answer answer-b"
-        data-letter="B"
-        data-text="30秒">
-        <span class="answer-letter">B</span>
-        30秒
-      </button>
-
-      <button class="answer answer-c"
-        data-letter="C"
-        data-text="45秒">
-        <span class="answer-letter">C</span>
-        45秒
-      </button>
-
-      <button class="answer answer-d"
-        data-letter="D"
-        data-text="60秒">
-        <span class="answer-letter">D</span>
-        60秒
-      </button>
-
-    </div>
-
-  </div>
-</div>
-
-
-<!-- 回答完了 -->
-<div class="screen" id="answeredScreen">
-  <div class="card">
-
-    <div class="check">✓</div>
-
-    <h2>回答完了！</h2>
-
-    <p>回答を受け付けました。</p>
-
-    <div
-      class="selected-answer"
-      id="selectedAnswer">
-    </div>
-
-    <p class="waiting-text">
-      次の問題まで<br>
-      そのままお待ちください。
+    <p class="center">
+      正解発表までお待ちください。
     </p>
 
-  </div>
+  </section>
+
+
+  <!-- RESULT -->
+  <section id="resultScreen" class="card hidden">
+
+    <div id="resultMark" class="result-mark"></div>
+
+    <div id="resultTitle" class="status"></div>
+
+    <div id="resultPoints" class="points"></div>
+
+    <div id="correctAnswer" class="correct-answer"></div>
+
+    <p class="small center">
+      次の問題までお待ちください。
+    </p>
+
+  </section>
+
 </div>
 
 
 <script type="module">
 
-  import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-  import {
-    getDatabase,
-    ref,
-    push,
-    set,
-    onValue
-  }
-  from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
-
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
-    authDomain: "scm-quiz-df0e6.firebaseapp.com",
-    databaseURL: "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "scm-quiz-df0e6",
-    storageBucket: "scm-quiz-df0e6.firebasestorage.app",
-    messagingSenderId: "30616205850",
-    appId: "1:30616205850:web:224b6386ee807700d26fa3"
-  };
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  get,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-
-  let teamId = localStorage.getItem("scmQuizTeamId");
-  let teamName = localStorage.getItem("scmQuizTeamName");
-
-  let timeLeft = 45;
-  let timerInterval = null;
-  let hasAnswered = false;
-  let q1Started = false;
-
-
-  function showScreen(screenId) {
-
-    document.querySelectorAll(".screen")
-      .forEach(screen => {
-        screen.style.display = "none";
-      });
-
-    document.getElementById(screenId)
-      .style.display = "flex";
-  }
+const firebaseConfig = {
+  apiKey: "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
+  authDomain: "scm-quiz-df0e6.firebaseapp.com",
+  databaseURL: "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "scm-quiz-df0e6",
+  storageBucket: "scm-quiz-df0e6.firebasestorage.app",
+  messagingSenderId: "30616205850",
+  appId: "1:30616205850:web:224b6386ee807700d26fa3"
+};
 
 
-  // すでに参加済みの端末
-  if (teamId && teamName) {
-
-    document.getElementById(
-      "displayTeamName"
-    ).textContent = teamName;
-
-    showScreen("waitingScreen");
-  }
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 
-  // 新規参加
-  async function joinQuiz() {
+// ===============================
+// 仮の問題データ
+// 後からここを差し替えます
+// ===============================
 
-    const inputName =
-      document.getElementById("teamName").value.trim();
+const questions = {
 
-    if (!inputName) {
-      alert("チーム名を入力してください！");
-      return;
-    }
+  practice: {
+    label: "練習問題",
+    text: "習志野拠点の最寄り駅は？",
+    choices: [
+      "南船橋駅",
+      "幕張豊砂駅",
+      "新習志野駅",
+      "新浦安駅"
+    ],
+    correct: 1,
+    images: []
+  },
 
-    const joinButton =
-      document.getElementById("joinButton");
+  q1: {
+    label: "Q1",
+    text: "船橋・習志野を足したロジ面積数（㎡）は？ちなみに1坪数は3.30578です。",
+    choices: [
+      "約18,843㎡",
+      "約19,112㎡",
+      "約20,896㎡",
+      "約17,456㎡"
+    ],
+    correct: 0,
+    images: []
+  },
 
-    joinButton.disabled = true;
-    joinButton.textContent = "参加中...";
+  q2: {
+    label: "Q2",
+    text: "勤続年数が一番長いPAがいるチームはどこ？",
+    choices: [
+      "販売1部 販売1G",
+      "販売1部 販売3G",
+      "toC販売部 出品管理G",
+      "物流管理部 千葉物流管理G"
+    ],
+    correct: 0,
+    images: []
+  },
 
-    try {
+  q3: {
+    label: "Q3",
+    text: "準備中",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
+  },
 
-      const newTeamRef =
-        push(ref(database, "teams"));
+  q4: {
+    label: "Q4",
+    text: "準備中",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
+  },
 
-      teamId = newTeamRef.key;
-      teamName = inputName;
+  q5: {
+    label: "Q5",
+    text: "ルイ・ヴィトンのモノグラム柄やダミエ柄は、ある国の伝統的な文様から着想を得て生まれました。その国はどこでしょうか？",
+    choices: [
+      "イタリア",
+      "フランス",
+      "ドイツ",
+      "日本"
+    ],
+    correct: 3,
+    images: []
+  },
 
-      await set(newTeamRef, {
-        name: teamName,
-        score: 0,
-        joinedAt: Date.now()
-      });
+  q6: {
+    label: "Q6",
+    text: "準備中",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
+  },
 
-      localStorage.setItem(
-        "scmQuizTeamId",
-        teamId
-      );
+  q7: {
+    label: "Q7",
+    text: "準備中",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
+  },
 
-      localStorage.setItem(
-        "scmQuizTeamName",
-        teamName
-      );
+  q8: {
+    label: "Q8",
+    text: "準備中",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
+  },
 
-      document.getElementById(
-        "displayTeamName"
-      ).textContent = teamName;
+  q9: {
+    label: "Q9",
+    text: "準備中",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
+  },
 
-      showScreen("waitingScreen");
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert(
-        "参加登録に失敗しました。もう一度お試しください。"
-      );
-
-      joinButton.disabled = false;
-      joinButton.textContent =
-        "クイズに参加する";
-    }
-  }
-
-
-  // Q1開始
-  function startQ1() {
-
-    if (q1Started) return;
-
-    q1Started = true;
-    hasAnswered = false;
-    timeLeft = 45;
-
-    document.getElementById(
-      "timer"
-    ).textContent = timeLeft;
-
-    showScreen("quizScreen");
-
-    timerInterval = setInterval(() => {
-
-      timeLeft--;
-
-      document.getElementById(
-        "timer"
-      ).textContent = timeLeft;
-
-      if (timeLeft <= 0) {
-
-        clearInterval(timerInterval);
-
-        timeUp();
-      }
-
-    }, 1000);
+  q10: {
+    label: "Q10",
+    text: "徳重社長がトップメッセージで紹介している絵の名前は？",
+    choices: ["A", "B", "C", "D"],
+    correct: null,
+    images: []
   }
 
-
-  // Firebaseから運営操作を監視
-  onValue(
-    ref(database, "game"),
-    (snapshot) => {
-
-      const game = snapshot.val();
-
-      if (!game) return;
-
-      if (
-        game.status === "question" &&
-        game.question === 1
-      ) {
-        startQ1();
-      }
-    }
-  );
+};
 
 
-  // 回答
-  async function selectAnswer(letter, answerText) {
+// ===============================
+// DOM
+// ===============================
 
-    if (hasAnswered) return;
+const joinScreen = document.getElementById("joinScreen");
+const waitingScreen = document.getElementById("waitingScreen");
+const questionScreen = document.getElementById("questionScreen");
+const answeredScreen = document.getElementById("answeredScreen");
+const resultScreen = document.getElementById("resultScreen");
 
-    hasAnswered = true;
+const teamNameInput = document.getElementById("teamNameInput");
+const joinButton = document.getElementById("joinButton");
+const waitingTeamName = document.getElementById("waitingTeamName");
 
+const questionNumber = document.getElementById("questionNumber");
+const questionText = document.getElementById("questionText");
+const questionImages = document.getElementById("questionImages");
+const timer = document.getElementById("timer");
+const choicesElement = document.getElementById("choices");
+
+const resultMark = document.getElementById("resultMark");
+const resultTitle = document.getElementById("resultTitle");
+const resultPoints = document.getElementById("resultPoints");
+const correctAnswer = document.getElementById("correctAnswer");
+
+
+let teamId = localStorage.getItem("scmQuizTeamId");
+let teamName = localStorage.getItem("scmQuizTeamName");
+
+let currentQuestionKey = null;
+let timerInterval = null;
+let timeLeft = 45;
+
+
+// ===============================
+// SCREEN
+// ===============================
+
+function showScreen(screen) {
+
+  [
+    joinScreen,
+    waitingScreen,
+    questionScreen,
+    answeredScreen,
+    resultScreen
+  ].forEach(el => el.classList.add("hidden"));
+
+  screen.classList.remove("hidden");
+}
+
+
+// ===============================
+// EXISTING TEAM
+// ===============================
+
+if (teamId && teamName) {
+
+  waitingTeamName.textContent = teamName;
+  showScreen(waitingScreen);
+
+}
+
+
+// ===============================
+// JOIN
+// ===============================
+
+joinButton.addEventListener("click", async () => {
+
+  const name = teamNameInput.value.trim();
+
+  if (!name) {
+    alert("チーム名を入力してください");
+    return;
+  }
+
+  joinButton.disabled = true;
+  joinButton.textContent = "参加中...";
+
+  try {
+
+    const newTeamRef = push(ref(database, "teams"));
+
+    teamId = newTeamRef.key;
+    teamName = name;
+
+    await set(newTeamRef, {
+      name: teamName,
+      joinedAt: serverTimestamp()
+    });
+
+    localStorage.setItem("scmQuizTeamId", teamId);
+    localStorage.setItem("scmQuizTeamName", teamName);
+
+    waitingTeamName.textContent = teamName;
+
+    showScreen(waitingScreen);
+
+  } catch (error) {
+
+    console.error(error);
+    alert("参加に失敗しました。もう一度お試しください。");
+
+    joinButton.disabled = false;
+    joinButton.textContent = "クイズに参加する";
+  }
+
+});
+
+
+// ===============================
+// GAME LISTENER
+// ===============================
+
+onValue(ref(database, "game"), async snapshot => {
+
+  if (!teamId) return;
+
+  const game = snapshot.val();
+
+  if (!game) {
+    showScreen(waitingScreen);
+    return;
+  }
+
+  if (game.phase === "waiting") {
+
+    currentQuestionKey = null;
     clearInterval(timerInterval);
+    showScreen(waitingScreen);
+    return;
 
-    try {
-
-      await set(
-        ref(
-          database,
-          "answers/q1/" + teamId
-        ),
-        {
-          teamName: teamName,
-          answer: letter,
-          answerText: answerText,
-          remainingSeconds: timeLeft,
-          answeredAt: Date.now()
-        }
-      );
-
-    } catch (error) {
-      console.error(error);
-    }
-
-    document.getElementById(
-      "selectedAnswer"
-    ).textContent =
-      "あなたの回答：" +
-      letter +
-      "「" +
-      answerText +
-      "」";
-
-    showScreen("answeredScreen");
   }
 
 
-  function timeUp() {
+  if (game.phase === "question") {
 
-    if (hasAnswered) return;
+    const key = game.currentQuestion;
 
-    hasAnswered = true;
+    if (!questions[key]) return;
 
-    document.getElementById(
-      "selectedAnswer"
-    ).textContent =
-      "時間切れ：回答なし";
+    await openQuestion(key, game);
+    return;
 
-    showScreen("answeredScreen");
   }
 
 
-  document.getElementById(
-    "joinButton"
-  ).addEventListener(
-    "click",
-    joinQuiz
+  if (game.phase === "result") {
+
+    const key = game.currentQuestion;
+
+    if (!questions[key]) return;
+
+    await showResult(key);
+    return;
+
+  }
+
+});
+
+
+// ===============================
+// OPEN QUESTION
+// ===============================
+
+async function openQuestion(key, game) {
+
+  const question = questions[key];
+
+  currentQuestionKey = key;
+
+  const answerRef = ref(
+    database,
+    `answers/${key}/${teamId}`
   );
 
+  const existingAnswer = await get(answerRef);
 
-  document.querySelectorAll(".answer")
-    .forEach(button => {
+  if (existingAnswer.exists()) {
+    showScreen(answeredScreen);
+    return;
+  }
 
-      button.addEventListener(
-        "click",
-        () => {
 
-          selectAnswer(
-            button.dataset.letter,
-            button.dataset.text
-          );
-        }
-      );
+  questionNumber.textContent = question.label;
+  questionText.textContent = question.text;
+
+  questionImages.innerHTML = "";
+
+  if (question.images && question.images.length > 0) {
+
+    if (question.images.length === 2) {
+      questionImages.classList.add("two");
+    } else {
+      questionImages.classList.remove("two");
+    }
+
+    question.images.forEach(src => {
+
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "問題画像";
+
+      questionImages.appendChild(img);
 
     });
+
+  }
+
+
+  choicesElement.innerHTML = "";
+
+  const letters = ["A", "B", "C", "D"];
+
+  question.choices.forEach((choice, index) => {
+
+    const button = document.createElement("button");
+
+    button.className = "choice";
+    button.textContent = `${letters[index]}：${choice}`;
+
+    button.addEventListener("click", () => {
+      submitAnswer(key, index);
+    });
+
+    choicesElement.appendChild(button);
+
+  });
+
+
+  showScreen(questionScreen);
+
+  startTimer();
+
+}
+
+
+// ===============================
+// TIMER
+// ===============================
+
+function startTimer() {
+
+  clearInterval(timerInterval);
+
+  timeLeft = 45;
+  timer.textContent = timeLeft;
+
+  timerInterval = setInterval(() => {
+
+    timeLeft--;
+
+    timer.textContent = Math.max(timeLeft, 0);
+
+    if (timeLeft <= 0) {
+
+      clearInterval(timerInterval);
+
+      document
+        .querySelectorAll(".choice")
+        .forEach(button => button.disabled = true);
+
+      setTimeout(() => {
+        showScreen(answeredScreen);
+      }, 500);
+
+    }
+
+  }, 1000);
+
+}
+
+
+// ===============================
+// ANSWER
+// ===============================
+
+async function submitAnswer(key, choiceIndex) {
+
+  if (timeLeft <= 0) return;
+
+  document
+    .querySelectorAll(".choice")
+    .forEach(button => button.disabled = true);
+
+  clearInterval(timerInterval);
+
+
+  const answerRef = ref(
+    database,
+    `answers/${key}/${teamId}`
+  );
+
+
+  const existing = await get(answerRef);
+
+  if (existing.exists()) {
+    showScreen(answeredScreen);
+    return;
+  }
+
+
+  await set(answerRef, {
+
+    teamId: teamId,
+    teamName: teamName,
+
+    choice: choiceIndex,
+
+    answeredAt: serverTimestamp()
+
+  });
+
+
+  showScreen(answeredScreen);
+
+}
+
+
+// ===============================
+// RESULT
+// ===============================
+
+async function showResult(key) {
+
+  clearInterval(timerInterval);
+
+  const question = questions[key];
+
+  const answerSnapshot = await get(
+    ref(database, `answers/${key}/${teamId}`)
+  );
+
+  const answer = answerSnapshot.val();
+
+
+  if (key === "practice") {
+
+    if (answer && answer.choice === question.correct) {
+
+      resultMark.textContent = "⭕";
+      resultTitle.textContent = "正解！";
+
+    } else {
+
+      resultMark.textContent = "❌";
+      resultTitle.textContent = "残念！";
+
+    }
+
+    resultPoints.textContent = "練習問題";
+
+  } else {
+
+    /*
+      本番の正式得点は
+      participant側では計算しません。
+
+      admin側で
+      startedAt と answeredAt を使って
+      正式得点を計算します。
+    */
+
+    if (answer && answer.choice === question.correct) {
+
+      resultMark.textContent = "⭕";
+      resultTitle.textContent = "正解！";
+
+    } else {
+
+      resultMark.textContent = "❌";
+      resultTitle.textContent = answer
+        ? "残念！"
+        : "時間切れ";
+
+    }
+
+    resultPoints.textContent = "得点集計中";
+
+  }
+
+
+  if (question.correct !== null) {
+
+    const letters = ["A", "B", "C", "D"];
+
+    correctAnswer.innerHTML =
+      `正解：<strong>${letters[question.correct]}：${question.choices[question.correct]}</strong>`;
+
+  } else {
+
+    correctAnswer.textContent = "";
+
+  }
+
+
+  showScreen(resultScreen);
+
+}
 
 </script>
 
