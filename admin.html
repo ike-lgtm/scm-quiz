@@ -86,6 +86,12 @@
       gap: 12px;
     }
 
+    .slide-controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
     button {
       border: none;
       border-radius: 12px;
@@ -124,6 +130,16 @@
       color: #744b00;
     }
 
+    .slide-button {
+      background: #222;
+      color: #fff;
+      min-height: 70px;
+    }
+
+    .slide-button.active {
+      outline: 4px solid #aaa;
+    }
+
     .danger {
       width: 100%;
       background: #b42318;
@@ -141,9 +157,6 @@
       margin-top: 14px;
     }
 
-    /*
-      問題番号をボタンとして使用
-    */
     .progress-item {
       padding: 10px 14px;
       border-radius: 999px;
@@ -176,10 +189,6 @@
       border-radius: 8px;
     }
 
-    .score {
-      font-weight: bold;
-    }
-
     .notice {
       font-size: 13px;
       color: #777;
@@ -188,7 +197,8 @@
 
     @media(max-width: 650px) {
       .stats,
-      .controls {
+      .controls,
+      .slide-controls {
         grid-template-columns: 1fr;
       }
     }
@@ -206,7 +216,7 @@
   </div>
 
 
-  <!-- 現在 -->
+  <!-- 現在の状態 -->
   <div class="card current-box">
 
     <div class="current-label">
@@ -224,7 +234,45 @@
   </div>
 
 
-  <!-- 数値 -->
+  <!-- Screen用スライド -->
+  <div class="card">
+
+    <h2>Screen用スライド</h2>
+
+    <p class="notice">
+      会場スクリーンに表示する画面を選択します。
+      参加者のスマホには表示されません。
+    </p>
+
+    <div class="slide-controls">
+
+      <button
+        id="titleSlideButton"
+        class="slide-button"
+      >
+        ① タイトル
+      </button>
+
+      <button
+        id="rulesSlideButton"
+        class="slide-button"
+      >
+        ② ルール説明
+      </button>
+
+      <button
+        id="practiceIntroButton"
+        class="slide-button"
+      >
+        ③ 練習問題へ
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- 参加状況 -->
   <div class="card">
 
     <div class="stats">
@@ -239,7 +287,6 @@
         </div>
       </div>
 
-
       <div class="stat">
         <div class="stat-label">
           回答済み
@@ -249,7 +296,6 @@
           0
         </div>
       </div>
-
 
       <div class="stat">
         <div class="stat-label">
@@ -266,10 +312,10 @@
   </div>
 
 
-  <!-- 進行 -->
+  <!-- クイズ操作 -->
   <div class="card">
 
-    <h2>進行操作</h2>
+    <h2>クイズ進行</h2>
 
     <div class="controls">
 
@@ -286,7 +332,6 @@
       </button>
 
     </div>
-
 
     <div style="margin-top:12px;">
 
@@ -307,7 +352,7 @@
 
     <p class="notice">
       練習問題〜Q10をクリックすると、
-      その問題へ直接移動できます。
+      その問題を直接開始できます。
     </p>
 
     <div id="progress" class="progress"></div>
@@ -443,9 +488,9 @@ const database =
   getDatabase(app);
 
 
-/* =====================================
+/* ==============================
    問題順
-===================================== */
+============================== */
 
 const questionOrder = [
   "practice",
@@ -462,16 +507,14 @@ const questionOrder = [
 ];
 
 
-/* =====================================
+/* ==============================
    正解
 
    0=A
    1=B
    2=C
    3=D
-
-   未完成問題はnull
-===================================== */
+============================== */
 
 const correctAnswers = {
 
@@ -500,94 +543,74 @@ const correctAnswers = {
 };
 
 
-/* =====================================
+/* ==============================
    DOM
-===================================== */
+============================== */
 
 const currentQuestionElement =
-  document.getElementById(
-    "currentQuestion"
-  );
+  document.getElementById("currentQuestion");
 
 const currentStatus =
-  document.getElementById(
-    "currentStatus"
-  );
+  document.getElementById("currentStatus");
 
 const teamCount =
-  document.getElementById(
-    "teamCount"
-  );
+  document.getElementById("teamCount");
 
 const answerCount =
-  document.getElementById(
-    "answerCount"
-  );
+  document.getElementById("answerCount");
 
 const unansweredCount =
-  document.getElementById(
-    "unansweredCount"
-  );
+  document.getElementById("unansweredCount");
 
 const teamList =
-  document.getElementById(
-    "teamList"
-  );
+  document.getElementById("teamList");
 
 const answerList =
-  document.getElementById(
-    "answerList"
-  );
+  document.getElementById("answerList");
 
 const scoreList =
-  document.getElementById(
-    "scoreList"
-  );
+  document.getElementById("scoreList");
 
 const progress =
-  document.getElementById(
-    "progress"
-  );
+  document.getElementById("progress");
 
 const previousButton =
-  document.getElementById(
-    "previousButton"
-  );
+  document.getElementById("previousButton");
 
 const nextButton =
-  document.getElementById(
-    "nextButton"
-  );
+  document.getElementById("nextButton");
 
 const resultButton =
-  document.getElementById(
-    "resultButton"
-  );
+  document.getElementById("resultButton");
 
 const waitingButton =
-  document.getElementById(
-    "waitingButton"
-  );
+  document.getElementById("waitingButton");
 
 const midRankingButton =
-  document.getElementById(
-    "midRankingButton"
-  );
+  document.getElementById("midRankingButton");
 
 const finalRankingButton =
-  document.getElementById(
-    "finalRankingButton"
-  );
+  document.getElementById("finalRankingButton");
 
 const resetButton =
-  document.getElementById(
-    "resetButton"
-  );
+  document.getElementById("resetButton");
 
 
-/* =====================================
+/* スライド */
+
+const titleSlideButton =
+  document.getElementById("titleSlideButton");
+
+const rulesSlideButton =
+  document.getElementById("rulesSlideButton");
+
+const practiceIntroButton =
+  document.getElementById("practiceIntroButton");
+
+
+/* ==============================
    状態
-===================================== */
+============================== */
 
 let teams = {};
 
@@ -597,14 +620,16 @@ let currentQuestionKey = null;
 
 let currentPhase = "waiting";
 
+let currentSlide = null;
+
 let currentAnswerTotal = 0;
 
 let unsubscribeAnswers = null;
 
 
-/* =====================================
+/* ==============================
    表示名
-===================================== */
+============================== */
 
 function getLabel(key) {
 
@@ -621,9 +646,113 @@ function getLabel(key) {
 }
 
 
-/* =====================================
-   問題番号ボタン
-===================================== */
+/* ==============================
+   スライドボタン表示
+============================== */
+
+function renderSlideButtons() {
+
+  [
+    titleSlideButton,
+    rulesSlideButton,
+    practiceIntroButton
+  ].forEach(button => {
+    button.classList.remove("active");
+  });
+
+
+  if (
+    currentPhase !== "slide"
+  ) {
+    return;
+  }
+
+
+  if (
+    currentSlide === "title"
+  ) {
+    titleSlideButton.classList.add("active");
+  }
+
+
+  if (
+    currentSlide === "rules"
+  ) {
+    rulesSlideButton.classList.add("active");
+  }
+
+
+  if (
+    currentSlide === "practiceIntro"
+  ) {
+    practiceIntroButton.classList.add("active");
+  }
+
+}
+
+
+/* ==============================
+   スライド表示
+============================== */
+
+async function showSlide(slide) {
+
+  await set(
+    ref(database, "game"),
+    {
+      phase: "slide",
+
+      slide: slide,
+
+      /*
+        問題位置は残しておく
+      */
+      currentQuestion:
+        currentQuestionKey,
+
+      updatedAt:
+        serverTimestamp()
+    }
+  );
+
+}
+
+
+titleSlideButton.addEventListener(
+  "click",
+  async () => {
+
+    await showSlide("title");
+
+  }
+);
+
+
+rulesSlideButton.addEventListener(
+  "click",
+  async () => {
+
+    await showSlide("rules");
+
+  }
+);
+
+
+practiceIntroButton.addEventListener(
+  "click",
+  async () => {
+
+    await showSlide(
+      "practiceIntro"
+    );
+
+  }
+);
+
+
+/* ==============================
+   問題番号
+============================== */
 
 function renderProgress() {
 
@@ -633,10 +762,7 @@ function renderProgress() {
   questionOrder.forEach(key => {
 
     const button =
-      document.createElement(
-        "button"
-      );
-
+      document.createElement("button");
 
     button.type =
       "button";
@@ -660,18 +786,9 @@ function renderProgress() {
       getLabel(key);
 
 
-    /*
-      直接問題をクリック
-    */
-
     button.addEventListener(
       "click",
       async () => {
-
-        /*
-          現在出題中の問題を
-          もう一度押した場合
-        */
 
         if (
           key === currentQuestionKey &&
@@ -691,11 +808,6 @@ function renderProgress() {
           `${getLabel(key)}を開始しますか？`;
 
 
-        /*
-          現在位置より前の問題へ
-          戻る場合は警告
-        */
-
         if (currentQuestionKey) {
 
           const currentIndex =
@@ -710,8 +822,7 @@ function renderProgress() {
 
 
           if (
-            targetIndex <=
-            currentIndex
+            targetIndex <= currentIndex
           ) {
 
             message =
@@ -734,9 +845,7 @@ function renderProgress() {
 
         try {
 
-          await startQuestion(
-            key
-          );
+          await startQuestion(key);
 
         } catch (error) {
 
@@ -764,9 +873,9 @@ function renderProgress() {
 }
 
 
-/* =====================================
+/* ==============================
    チーム監視
-===================================== */
+============================== */
 
 onValue(
   ref(database, "teams"),
@@ -801,9 +910,7 @@ onValue(
         ([id, team], index) => {
 
           const div =
-            document.createElement(
-              "div"
-            );
+            document.createElement("div");
 
           div.className =
             "item";
@@ -811,9 +918,7 @@ onValue(
           div.textContent =
             `${index + 1}. ${team.name}`;
 
-          teamList.appendChild(
-            div
-          );
+          teamList.appendChild(div);
 
         }
       );
@@ -829,9 +934,9 @@ onValue(
 );
 
 
-/* =====================================
+/* ==============================
    GAME監視
-===================================== */
+============================== */
 
 onValue(
   ref(database, "game"),
@@ -850,6 +955,9 @@ onValue(
       currentPhase =
         "waiting";
 
+      currentSlide =
+        null;
+
 
       currentQuestionElement.textContent =
         "待機";
@@ -862,17 +970,16 @@ onValue(
 
       renderProgress();
 
+      renderSlideButtons();
+
       return;
 
     }
 
 
-    /*
-      ランキング表示時も
-      最後の問題番号を保持
-    */
-
-    if (game.currentQuestion) {
+    if (
+      game.currentQuestion
+    ) {
 
       currentQuestionKey =
         game.currentQuestion;
@@ -882,6 +989,67 @@ onValue(
 
     currentPhase =
       game.phase || "waiting";
+
+    currentSlide =
+      game.slide || null;
+
+
+    /*
+      スライド
+    */
+
+    if (
+      currentPhase === "slide"
+    ) {
+
+      if (
+        currentSlide === "title"
+      ) {
+
+        currentQuestionElement.textContent =
+          "タイトル";
+
+        currentStatus.textContent =
+          "Screen表示中";
+
+      }
+
+
+      else if (
+        currentSlide === "rules"
+      ) {
+
+        currentQuestionElement.textContent =
+          "ルール説明";
+
+        currentStatus.textContent =
+          "Screen表示中";
+
+      }
+
+
+      else if (
+        currentSlide === "practiceIntro"
+      ) {
+
+        currentQuestionElement.textContent =
+          "練習問題へ";
+
+        currentStatus.textContent =
+          "Screen表示中";
+
+      }
+
+
+      watchAnswers(null);
+
+      renderProgress();
+
+      renderSlideButtons();
+
+      return;
+
+    }
 
 
     currentQuestionElement.textContent =
@@ -956,13 +1124,15 @@ onValue(
 
     renderProgress();
 
+    renderSlideButtons();
+
   }
 );
 
 
-/* =====================================
+/* ==============================
    回答監視
-===================================== */
+============================== */
 
 function watchAnswers(key) {
 
@@ -976,13 +1146,9 @@ function watchAnswers(key) {
   }
 
 
-  currentAnswerTotal =
-    0;
+  currentAnswerTotal = 0;
 
-
-  answerCount.textContent =
-    "0";
-
+  answerCount.textContent = "0";
 
   updateUnanswered();
 
@@ -1012,9 +1178,7 @@ function watchAnswers(key) {
 
 
         const entries =
-          Object.values(
-            answers
-          );
+          Object.values(answers);
 
 
         currentAnswerTotal =
@@ -1028,8 +1192,7 @@ function watchAnswers(key) {
         updateUnanswered();
 
 
-        answerList.innerHTML =
-          "";
+        answerList.innerHTML = "";
 
 
         if (
@@ -1052,10 +1215,7 @@ function watchAnswers(key) {
           answer => {
 
             const div =
-              document.createElement(
-                "div"
-              );
-
+              document.createElement("div");
 
             div.className =
               "item";
@@ -1082,24 +1242,21 @@ function watchAnswers(key) {
 function updateUnanswered() {
 
   const total =
-    Object.keys(
-      teams
-    ).length;
+    Object.keys(teams).length;
 
 
   unansweredCount.textContent =
     Math.max(
       0,
-      total -
-      currentAnswerTotal
+      total - currentAnswerTotal
     );
 
 }
 
 
-/* =====================================
+/* ==============================
    得点監視
-===================================== */
+============================== */
 
 onValue(
   ref(database, "scores"),
@@ -1123,8 +1280,7 @@ function renderScores() {
         ([teamId, team]) => {
 
           const scores =
-            allScores[teamId] ||
-            {};
+            allScores[teamId] || {};
 
 
           const total =
@@ -1132,9 +1288,7 @@ function renderScores() {
               .reduce(
                 (sum, value) =>
                   sum +
-                  Number(
-                    value || 0
-                  ),
+                  Number(value || 0),
                 0
               );
 
@@ -1151,13 +1305,11 @@ function renderScores() {
 
   ranking.sort(
     (a,b) =>
-      b.total -
-      a.total
+      b.total - a.total
   );
 
 
-  scoreList.innerHTML =
-    "";
+  scoreList.innerHTML = "";
 
 
   if (
@@ -1176,10 +1328,7 @@ function renderScores() {
     (team, index) => {
 
       const div =
-        document.createElement(
-          "div"
-        );
-
+        document.createElement("div");
 
       div.className =
         "item";
@@ -1189,9 +1338,7 @@ function renderScores() {
         `${index + 1}位　${team.name}：${team.total.toLocaleString()} pt`;
 
 
-      scoreList.appendChild(
-        div
-      );
+      scoreList.appendChild(div);
 
     }
   );
@@ -1199,14 +1346,14 @@ function renderScores() {
 }
 
 
-/* =====================================
+/* ==============================
    問題開始
-===================================== */
+============================== */
 
 async function startQuestion(key) {
 
   /*
-    この問題の過去回答を削除
+    その問題の回答を削除
   */
 
   await remove(
@@ -1218,7 +1365,7 @@ async function startQuestion(key) {
 
 
   /*
-    この問題の過去得点だけ削除
+    その問題の得点を削除
   */
 
   if (
@@ -1239,8 +1386,7 @@ async function startQuestion(key) {
 
 
     if (
-      Object.keys(updates)
-        .length > 0
+      Object.keys(updates).length > 0
     ) {
 
       await update(
@@ -1254,7 +1400,7 @@ async function startQuestion(key) {
 
 
   /*
-    開始時刻をFirebaseへ保存
+    開始時刻
   */
 
   await set(
@@ -1269,10 +1415,6 @@ async function startQuestion(key) {
     }
   );
 
-
-  /*
-    確定したFirebase時刻を取得
-  */
 
   const roundSnapshot =
     await get(
@@ -1289,8 +1431,7 @@ async function startQuestion(key) {
 
   if (
     !round ||
-    typeof round.startedAt !==
-      "number"
+    typeof round.startedAt !== "number"
   ) {
 
     throw new Error(
@@ -1301,14 +1442,11 @@ async function startQuestion(key) {
 
 
   /*
-    全端末へ問題開始を通知
+    問題開始
   */
 
   await set(
-    ref(
-      database,
-      "game"
-    ),
+    ref(database, "game"),
 
     {
       phase:
@@ -1325,9 +1463,9 @@ async function startQuestion(key) {
 }
 
 
-/* =====================================
+/* ==============================
    次の問題
-===================================== */
+============================== */
 
 nextButton.addEventListener(
   "click",
@@ -1352,8 +1490,7 @@ nextButton.addEventListener(
 
 
     if (
-      nextIndex >=
-      questionOrder.length
+      nextIndex >= questionOrder.length
     ) {
 
       alert(
@@ -1366,9 +1503,7 @@ nextButton.addEventListener(
 
 
     const nextKey =
-      questionOrder[
-        nextIndex
-      ];
+      questionOrder[nextIndex];
 
 
     if (
@@ -1380,8 +1515,7 @@ nextButton.addEventListener(
     }
 
 
-    nextButton.disabled =
-      true;
+    nextButton.disabled = true;
 
 
     try {
@@ -1401,16 +1535,15 @@ nextButton.addEventListener(
     }
 
 
-    nextButton.disabled =
-      false;
+    nextButton.disabled = false;
 
   }
 );
 
 
-/* =====================================
+/* ==============================
    前の問題
-===================================== */
+============================== */
 
 previousButton.addEventListener(
   "click",
@@ -1450,9 +1583,7 @@ previousButton.addEventListener(
 
 
     const previousKey =
-      questionOrder[
-        index - 1
-      ];
+      questionOrder[index - 1];
 
 
     if (
@@ -1484,16 +1615,14 @@ previousButton.addEventListener(
 );
 
 
-/* =====================================
+/* ==============================
    得点計算
-===================================== */
+============================== */
 
-async function calculateScores(
-  key
-) {
+async function calculateScores(key) {
 
   /*
-    練習問題は0点
+    練習問題は得点なし
   */
 
   if (
@@ -1506,11 +1635,6 @@ async function calculateScores(
   const correct =
     correctAnswers[key];
 
-
-  /*
-    正解未設定なら
-    誤操作防止
-  */
 
   if (
     correct === null ||
@@ -1539,8 +1663,7 @@ async function calculateScores(
 
   if (
     !round ||
-    typeof round.startedAt !==
-      "number"
+    typeof round.startedAt !== "number"
   ) {
 
     throw new Error(
@@ -1560,8 +1683,7 @@ async function calculateScores(
 
 
   const answers =
-    answersSnapshot.val() ||
-    {};
+    answersSnapshot.val() || {};
 
 
   const updates = {};
@@ -1577,17 +1699,10 @@ async function calculateScores(
       let points = 0;
 
 
-      /*
-        正解かつ
-        45秒以内のみ得点
-      */
-
       if (
         answer &&
-        answer.choice ===
-          correct &&
-        typeof answer.answeredAt ===
-          "number"
+        answer.choice === correct &&
+        typeof answer.answeredAt === "number"
       ) {
 
         const elapsedSeconds =
@@ -1607,8 +1722,7 @@ async function calculateScores(
           const remainingSeconds =
             Math.max(
               0,
-              45 -
-              elapsedSeconds
+              45 - elapsedSeconds
             );
 
 
@@ -1617,8 +1731,7 @@ async function calculateScores(
               500 +
               500 *
               (
-                remainingSeconds /
-                45
+                remainingSeconds / 45
               )
             );
 
@@ -1652,9 +1765,9 @@ async function calculateScores(
 }
 
 
-/* =====================================
+/* ==============================
    正解発表
-===================================== */
+============================== */
 
 resultButton.addEventListener(
   "click",
@@ -1675,8 +1788,7 @@ resultButton.addEventListener(
 
 
     if (
-      currentPhase ===
-      "result"
+      currentPhase === "result"
     ) {
 
       alert(
@@ -1689,8 +1801,7 @@ resultButton.addEventListener(
 
 
     if (
-      currentPhase !==
-      "question"
+      currentPhase !== "question"
     ) {
 
       alert(
@@ -1711,8 +1822,7 @@ resultButton.addEventListener(
     }
 
 
-    resultButton.disabled =
-      true;
+    resultButton.disabled = true;
 
     resultButton.textContent =
       "集計中...";
@@ -1726,10 +1836,7 @@ resultButton.addEventListener(
 
 
       await set(
-        ref(
-          database,
-          "game"
-        ),
+        ref(database, "game"),
 
         {
           phase:
@@ -1755,8 +1862,7 @@ resultButton.addEventListener(
     }
 
 
-    resultButton.disabled =
-      false;
+    resultButton.disabled = false;
 
     resultButton.textContent =
       "正解発表・得点確定";
@@ -1765,9 +1871,9 @@ resultButton.addEventListener(
 );
 
 
-/* =====================================
+/* ==============================
    待機画面
-===================================== */
+============================== */
 
 waitingButton.addEventListener(
   "click",
@@ -1776,7 +1882,7 @@ waitingButton.addEventListener(
 
     if (
       !confirm(
-        "参加者を待機画面へ戻しますか？"
+        "待機画面へ戻しますか？"
       )
     ) {
       return;
@@ -1784,19 +1890,11 @@ waitingButton.addEventListener(
 
 
     await set(
-      ref(
-        database,
-        "game"
-      ),
+      ref(database, "game"),
 
       {
         phase:
           "waiting",
-
-        /*
-          問題番号は残す
-          → 待機後も続きから進める
-        */
 
         currentQuestion:
           currentQuestionKey,
@@ -1810,9 +1908,9 @@ waitingButton.addEventListener(
 );
 
 
-/* =====================================
+/* ==============================
    中間ランキング
-===================================== */
+============================== */
 
 midRankingButton.addEventListener(
   "click",
@@ -1829,10 +1927,7 @@ midRankingButton.addEventListener(
 
 
     await set(
-      ref(
-        database,
-        "game"
-      ),
+      ref(database, "game"),
 
       {
         phase:
@@ -1840,10 +1935,6 @@ midRankingButton.addEventListener(
 
         rankingType:
           "mid",
-
-        /*
-          Q5など現在位置を保持
-        */
 
         currentQuestion:
           currentQuestionKey,
@@ -1857,9 +1948,9 @@ midRankingButton.addEventListener(
 );
 
 
-/* =====================================
+/* ==============================
    最終ランキング
-===================================== */
+============================== */
 
 finalRankingButton.addEventListener(
   "click",
@@ -1876,10 +1967,7 @@ finalRankingButton.addEventListener(
 
 
     await set(
-      ref(
-        database,
-        "game"
-      ),
+      ref(database, "game"),
 
       {
         phase:
@@ -1903,9 +1991,9 @@ finalRankingButton.addEventListener(
 );
 
 
-/* =====================================
+/* ==============================
    全リセット
-===================================== */
+============================== */
 
 resetButton.addEventListener(
   "click",
@@ -1940,8 +2028,7 @@ resetButton.addEventListener(
     }
 
 
-    resetButton.disabled =
-      true;
+    resetButton.disabled = true;
 
     resetButton.textContent =
       "削除中...";
@@ -1952,46 +2039,26 @@ resetButton.addEventListener(
       await Promise.all([
 
         remove(
-          ref(
-            database,
-            "teams"
-          )
+          ref(database, "teams")
         ),
 
         remove(
-          ref(
-            database,
-            "answers"
-          )
+          ref(database, "answers")
         ),
 
         remove(
-          ref(
-            database,
-            "scores"
-          )
+          ref(database, "scores")
         ),
 
         remove(
-          ref(
-            database,
-            "rounds"
-          )
+          ref(database, "rounds")
         )
 
       ]);
 
 
-      /*
-        リセット時だけ
-        currentQuestionも消す
-      */
-
       await set(
-        ref(
-          database,
-          "game"
-        ),
+        ref(database, "game"),
 
         {
           phase:
@@ -2006,15 +2073,14 @@ resetButton.addEventListener(
       );
 
 
-      /*
-        ローカル状態も初期化
-      */
-
       currentQuestionKey =
         null;
 
       currentPhase =
         "waiting";
+
+      currentSlide =
+        null;
 
 
       alert(
@@ -2033,8 +2099,7 @@ resetButton.addEventListener(
     }
 
 
-    resetButton.disabled =
-      false;
+    resetButton.disabled = false;
 
     resetButton.textContent =
       "テストデータを全削除";
@@ -2043,11 +2108,13 @@ resetButton.addEventListener(
 );
 
 
-/* =====================================
+/* ==============================
    初期表示
-===================================== */
+============================== */
 
 renderProgress();
+
+renderSlideButtons();
 
 </script>
 
