@@ -10,8 +10,11 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
+      width: 100%;
+      height: 100%;
       background: #090909;
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -19,11 +22,18 @@
       overflow: hidden;
     }
 
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
     .screen {
       display: none;
       width: 100vw;
       height: 100vh;
-      padding: 4vh 5vw;
+      height: 100dvh;
+      padding: clamp(18px, 3vh, 42px) clamp(28px, 3vw, 58px);
+      overflow: hidden;
     }
 
     .screen.active {
@@ -31,7 +41,7 @@
     }
 
     .eyebrow {
-      font-size: clamp(18px, 2vw, 30px);
+      font-size: clamp(16px, 1.8vw, 28px);
       font-weight: 800;
       letter-spacing: .18em;
       opacity: .65;
@@ -46,9 +56,10 @@
       margin: 3vh 0;
     }
 
-    /* =========================
+
+    /* ========================================
        タイトル
-    ========================= */
+    ======================================== */
 
     #titleScreen {
       flex-direction: column;
@@ -58,66 +69,77 @@
     }
 
     .main-logo {
-      font-size: clamp(72px, 10vw, 150px);
+      font-size: clamp(64px, 9vw, 140px);
       font-weight: 950;
       letter-spacing: -.05em;
       line-height: .9;
     }
 
     .title-main {
-      font-size: clamp(32px, 4vw, 64px);
+      font-size: clamp(30px, 3.8vw, 60px);
       font-weight: 900;
       margin-top: 5vh;
     }
 
     .title-sub {
-      font-size: clamp(22px, 2.5vw, 38px);
+      font-size: clamp(20px, 2.3vw, 36px);
       font-weight: 700;
       margin-top: 2vh;
       opacity: .75;
     }
 
-    /* =========================
-       ルール
-    ========================= */
+
+    /* ========================================
+       RULES
+       Windowsでも収まりやすい2列
+    ======================================== */
 
     #rulesScreen {
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      padding-top: clamp(15px, 2.5vh, 35px);
+      padding-bottom: clamp(15px, 2.5vh, 35px);
     }
 
     .slide-title {
-      font-size: clamp(46px, 6vw, 82px);
+      font-size: clamp(38px, 5vw, 70px);
       font-weight: 950;
-      margin-bottom: 3vh;
+      margin: 0 0 clamp(16px, 3vh, 34px);
+      line-height: 1;
     }
 
     .rules-box {
-      width: min(100%, 1050px);
+      width: min(100%, 1250px);
       display: grid;
-      gap: 1.3vh;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(10px, 1.7vh, 18px) 4vw;
     }
 
     .rule {
       display: flex;
       align-items: center;
-      gap: 22px;
-      font-size: clamp(21px, 2.2vw, 34px);
+      gap: clamp(12px, 1.5vw, 20px);
+      min-height: 62px;
+      padding: clamp(7px, 1vh, 12px) 0;
+      font-size: clamp(18px, 1.9vw, 30px);
       font-weight: 750;
-      padding: 1vh 0;
+      line-height: 1.25;
     }
 
     .rule-number {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
+      width: clamp(40px, 3.5vw, 52px);
+      height: clamp(40px, 3.5vw, 52px);
+      min-width: clamp(40px, 3.5vw, 52px);
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       border: 2px solid #fff;
       border-radius: 50%;
-      font-size: 21px;
+
+      font-size: clamp(17px, 1.6vw, 22px);
       font-weight: 900;
     }
 
@@ -125,9 +147,16 @@
       font-weight: 950;
     }
 
-    /* =========================
+    .rule-wide {
+      grid-column: 1 / -1;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+
+    /* ========================================
        練習案内
-    ========================= */
+    ======================================== */
 
     #practiceIntroScreen {
       flex-direction: column;
@@ -137,13 +166,13 @@
     }
 
     .practice-big {
-      font-size: clamp(56px, 8vw, 120px);
+      font-size: clamp(52px, 7vw, 110px);
       font-weight: 950;
       line-height: 1.05;
     }
 
     .practice-text {
-      font-size: clamp(26px, 3vw, 44px);
+      font-size: clamp(24px, 2.8vw, 42px);
       font-weight: 700;
       margin-top: 4vh;
       opacity: .8;
@@ -153,14 +182,15 @@
       margin-top: 5vh;
       border: 2px solid rgba(255,255,255,.4);
       border-radius: 999px;
-      padding: 15px 32px;
-      font-size: clamp(18px, 2vw, 28px);
+      padding: 14px 30px;
+      font-size: clamp(17px, 1.8vw, 26px);
       font-weight: 800;
     }
 
-    /* =========================
+
+    /* ========================================
        待機
-    ========================= */
+    ======================================== */
 
     #waitingScreen {
       flex-direction: column;
@@ -170,28 +200,31 @@
     }
 
     .waiting-title {
-      font-size: clamp(72px, 10vw, 150px);
+      font-size: clamp(68px, 9vw, 140px);
       font-weight: 950;
     }
 
     .waiting-sub {
       margin-top: 3vh;
-      font-size: clamp(24px, 3vw, 44px);
+      font-size: clamp(23px, 2.8vw, 42px);
       font-weight: 700;
     }
 
     .waiting-note {
       margin-top: 5vh;
-      font-size: clamp(18px, 2vw, 28px);
+      font-size: clamp(17px, 1.8vw, 26px);
       opacity: .55;
     }
 
-    /* =========================
-       問題
-    ========================= */
+
+    /* ========================================
+       問題画面
+    ======================================== */
 
     #questionScreen {
       flex-direction: column;
+      padding-top: clamp(20px, 3vh, 38px);
+      padding-bottom: clamp(14px, 2vh, 25px);
     }
 
     .question-top {
@@ -199,105 +232,172 @@
       align-items: center;
       justify-content: space-between;
       gap: 30px;
-      flex-shrink: 0;
+      flex: 0 0 auto;
     }
 
     .question-label {
-      font-size: clamp(24px, 2.7vw, 40px);
-      font-weight: 900;
+      font-size: clamp(27px, 2.8vw, 46px);
+      font-weight: 950;
     }
 
     .timer {
-      width: 90px;
-      height: 90px;
-      min-width: 90px;
+      width: clamp(76px, 7vw, 105px);
+      height: clamp(76px, 7vw, 105px);
+      min-width: clamp(76px, 7vw, 105px);
+
       border: 4px solid #fff;
       border-radius: 50%;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 37px;
+
+      font-size: clamp(31px, 3vw, 46px);
       font-weight: 950;
     }
 
     .question-text {
+      width: 100%;
+      max-width: 1700px;
+      margin: clamp(6px, 1vh, 12px) auto clamp(8px, 1vh, 14px);
+
       text-align: center;
-      font-size: clamp(27px, 3.1vw, 49px);
+      font-size: clamp(28px, 3vw, 52px);
       font-weight: 900;
-      line-height: 1.3;
-      margin: 1vh auto 1.5vh;
-      max-width: 1450px;
-      flex-shrink: 0;
+      line-height: 1.28;
+
+      flex: 0 0 auto;
     }
 
+
+    /* ========================================
+       画像
+       ★今回の大きな変更箇所
+    ======================================== */
+
     .question-images {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2vw;
-      min-height: 0;
-      flex: 1;
-      overflow: hidden;
-      margin: 0 auto 1.5vh;
       width: 100%;
+      flex: 1 1 auto;
+      min-height: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2vw;
+
+      overflow: hidden;
+
+      margin:
+        clamp(4px, .5vh, 8px)
+        auto
+        clamp(8px, 1vh, 14px);
     }
 
     .question-images img {
       display: block;
-      object-fit: contain;
-      border-radius: 12px;
-      max-width: 46%;
-      max-height: 31vh;
-    }
 
-    .question-images.one-image img {
-      max-width: min(80vw, 1100px);
-      max-height: 34vh;
       width: auto;
       height: auto;
+
+      object-fit: contain;
+
+      border-radius: 12px;
+
+      /*
+        以前31〜34vhだったところを
+        大幅に拡大
+      */
+      max-height: 42vh;
+      max-width: 82vw;
+    }
+
+    /*
+      画像1枚の場合
+    */
+
+    .question-images.one-image img {
+      max-height: 42vh;
+      max-width: min(82vw, 1250px);
+    }
+
+    /*
+      画像2枚の場合
+    */
+
+    .question-images.two-images img {
+      max-width: 46%;
+      max-height: 40vh;
     }
 
     .question-images:empty {
       display: none;
     }
 
+
+    /* ========================================
+       選択肢
+    ======================================== */
+
     .choices {
-      width: min(100%, 1350px);
-      margin: auto auto 0;
+      width: min(100%, 1700px);
+
+      margin: 0 auto;
+
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      flex-shrink: 0;
+
+      gap: clamp(9px, 1.2vh, 14px);
+
+      flex: 0 0 auto;
     }
 
     .choice {
       background: #181818;
       border: 2px solid #333;
-      border-radius: 14px;
-      padding: 15px 22px;
-      font-size: clamp(18px, 1.8vw, 27px);
+      border-radius: 16px;
+
+      padding:
+        clamp(12px, 1.5vh, 18px)
+        clamp(18px, 1.7vw, 28px);
+
+      font-size: clamp(18px, 1.75vw, 30px);
       font-weight: 800;
-      line-height: 1.25;
+      line-height: 1.2;
+
+      min-height: 72px;
+
+      display: flex;
+      align-items: center;
     }
 
     .choice-letter {
       opacity: .55;
-      margin-right: 12px;
+      margin-right: 14px;
+      font-size: 1.15em;
+      font-weight: 950;
     }
 
     .answer-counter {
       text-align: center;
-      margin-top: 1.2vh;
-      font-size: clamp(17px, 1.6vw, 25px);
+
+      margin-top: clamp(7px, 1vh, 12px);
+
+      font-size: clamp(16px, 1.5vw, 24px);
       font-weight: 800;
+
       opacity: .7;
-      flex-shrink: 0;
+
+      flex: 0 0 auto;
     }
 
-    /* 画像なし問題は少し大きく */
+
+    /* ========================================
+       画像なし問題
+    ======================================== */
+
     #questionScreen.no-image .question-text {
       font-size: clamp(34px, 4vw, 62px);
-      margin-top: 5vh;
+      margin-top: 6vh;
     }
 
     #questionScreen.no-image .choices {
@@ -306,13 +406,19 @@
     }
 
     #questionScreen.no-image .choice {
-      padding: 24px;
-      font-size: clamp(21px, 2.3vw, 34px);
+      min-height: 100px;
+
+      padding:
+        clamp(20px, 2.5vh, 30px)
+        clamp(22px, 2vw, 34px);
+
+      font-size: clamp(21px, 2.2vw, 34px);
     }
 
-    /* =========================
+
+    /* ========================================
        正解発表
-    ========================= */
+    ======================================== */
 
     #resultScreen {
       flex-direction: column;
@@ -321,23 +427,27 @@
     }
 
     .result-heading {
-      font-size: clamp(26px, 3vw, 44px);
+      font-size: clamp(24px, 2.8vw, 42px);
       font-weight: 850;
       opacity: .6;
     }
 
     .correct-answer {
       margin-top: 1.5vh;
-      font-size: clamp(40px, 5vw, 76px);
+
+      font-size: clamp(38px, 4.8vw, 72px);
       font-weight: 950;
+
       text-align: center;
     }
 
     .distribution {
       width: min(100%, 1050px);
-      margin-top: 4vh;
+
+      margin-top: clamp(20px, 3vh, 35px);
+
       display: grid;
-      gap: 14px;
+      gap: clamp(8px, 1.3vh, 14px);
     }
 
     .distribution-row {
@@ -348,46 +458,58 @@
     }
 
     .distribution-letter {
-      font-size: 25px;
+      font-size: clamp(20px, 2vw, 28px);
       font-weight: 950;
     }
 
     .bar-track {
-      height: 32px;
+      height: clamp(24px, 3vh, 32px);
+
       background: #222;
       border-radius: 999px;
+
       overflow: hidden;
     }
 
     .bar {
       height: 100%;
       width: 0%;
+
       background: #fff;
       border-radius: 999px;
+
       transition: width .6s ease;
     }
 
     .distribution-number {
-      font-size: 23px;
+      font-size: clamp(19px, 1.8vw, 26px);
       font-weight: 850;
       text-align: right;
     }
 
     .explanation {
-      width: min(100%, 1150px);
-      margin-top: 4vh;
-      padding: 22px 30px;
+      width: min(100%, 1200px);
+
+      margin-top: clamp(20px, 3vh, 35px);
+
+      padding:
+        clamp(15px, 2vh, 24px)
+        clamp(20px, 2vw, 32px);
+
       border-top: 1px solid #444;
+
       text-align: center;
       white-space: pre-line;
-      font-size: clamp(19px, 2vw, 28px);
-      line-height: 1.55;
+
+      font-size: clamp(17px, 1.8vw, 27px);
+      line-height: 1.5;
       font-weight: 650;
     }
 
-    /* =========================
+
+    /* ========================================
        中間ランキング
-    ========================= */
+    ======================================== */
 
     #rankingScreen {
       flex-direction: column;
@@ -395,27 +517,47 @@
     }
 
     .ranking-title {
-      font-size: clamp(42px, 5vw, 76px);
+      font-size: clamp(38px, 4.8vw, 70px);
       font-weight: 950;
-      margin-bottom: 3vh;
+
+      margin:
+        0
+        0
+        clamp(18px, 2.5vh, 30px);
     }
 
     .ranking-list {
-      width: min(100%, 1400px);
+      width: min(100%, 1500px);
+
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px 25px;
+
+      gap:
+        clamp(7px, 1vh, 11px)
+        clamp(16px, 2vw, 28px);
+
       overflow: hidden;
     }
 
     .ranking-row {
       display: grid;
-      grid-template-columns: 80px 1fr auto;
+
+      grid-template-columns:
+        clamp(55px, 5vw, 80px)
+        1fr
+        auto;
+
       align-items: center;
+
       background: #161616;
+
       border-radius: 10px;
-      padding: 10px 18px;
-      font-size: clamp(16px, 1.5vw, 23px);
+
+      padding:
+        clamp(7px, 1vh, 11px)
+        clamp(12px, 1.5vw, 20px);
+
+      font-size: clamp(14px, 1.35vw, 22px);
     }
 
     .ranking-position {
@@ -424,6 +566,7 @@
 
     .ranking-name {
       font-weight: 750;
+
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -433,9 +576,10 @@
       font-weight: 950;
     }
 
-    /* =========================
+
+    /* ========================================
        FINAL
-    ========================= */
+    ======================================== */
 
     #finalScreen {
       flex-direction: column;
@@ -445,30 +589,135 @@
     }
 
     .final-small {
-      font-size: clamp(24px, 3vw, 42px);
+      font-size: clamp(22px, 2.8vw, 40px);
       font-weight: 850;
       letter-spacing: .2em;
       opacity: .55;
     }
 
     .final-title {
-      font-size: clamp(64px, 9vw, 135px);
+      font-size: clamp(60px, 8vw, 125px);
       font-weight: 950;
       margin-top: 2vh;
     }
 
     .final-note {
-      font-size: clamp(22px, 2.5vw, 36px);
+      font-size: clamp(20px, 2.3vw, 34px);
       margin-top: 3vh;
       opacity: .7;
     }
+
+
+    /* ========================================
+       高さが小さいPC向け
+       WindowsノートPC等
+    ======================================== */
+
+    @media (max-height: 800px) {
+
+      .screen {
+        padding-top: 16px;
+        padding-bottom: 12px;
+      }
+
+      .slide-title {
+        font-size: clamp(34px, 4vw, 54px);
+        margin-bottom: 14px;
+      }
+
+      .rules-box {
+        gap: 5px 3vw;
+      }
+
+      .rule {
+        min-height: 48px;
+        padding: 4px 0;
+        font-size: clamp(16px, 1.65vw, 24px);
+      }
+
+      .rule-number {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 16px;
+      }
+
+      .question-text {
+        font-size: clamp(25px, 2.7vw, 43px);
+        line-height: 1.2;
+      }
+
+      .timer {
+        width: 74px;
+        height: 74px;
+        min-width: 74px;
+        font-size: 30px;
+      }
+
+      .question-images img,
+      .question-images.one-image img {
+        max-height: 38vh;
+      }
+
+      .choice {
+        min-height: 60px;
+        padding: 10px 18px;
+      }
+
+      .answer-counter {
+        margin-top: 5px;
+      }
+    }
+
+
+    /* ========================================
+       さらに高さが小さい環境
+    ======================================== */
+
+    @media (max-height: 650px) {
+
+      .rules-box {
+        gap: 2px 3vw;
+      }
+
+      .rule {
+        min-height: 40px;
+        font-size: clamp(14px, 1.45vw, 20px);
+      }
+
+      .rule-number {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 14px;
+      }
+
+      .question-images img,
+      .question-images.one-image img {
+        max-height: 34vh;
+      }
+
+      .choice {
+        min-height: 52px;
+        padding: 8px 16px;
+        font-size: clamp(16px, 1.5vw, 24px);
+      }
+    }
+
   </style>
 </head>
 
 <body>
 
-<!-- タイトル -->
-<section id="titleScreen" class="screen">
+
+<!-- ========================================
+     タイトル
+======================================== -->
+
+<section
+  id="titleScreen"
+  class="screen"
+>
 
   <div class="eyebrow">
     SCM SPECIAL EVENT
@@ -491,8 +740,14 @@
 </section>
 
 
-<!-- ルール -->
-<section id="rulesScreen" class="screen">
+<!-- ========================================
+     RULES
+======================================== -->
+
+<section
+  id="rulesScreen"
+  class="screen"
+>
 
   <div class="slide-title">
     RULES
@@ -501,53 +756,99 @@
   <div class="rules-box">
 
     <div class="rule">
-      <div class="rule-number">1</div>
-      <div>
-        1チーム <strong>6〜7名</strong>
+
+      <div class="rule-number">
+        1
       </div>
+
+      <div>
+        1チーム
+        <strong>6〜7名</strong>
+      </div>
+
     </div>
 
+
     <div class="rule">
-      <div class="rule-number">2</div>
+
+      <div class="rule-number">
+        5
+      </div>
+
+      <div>
+        正解
+        <strong>500pt</strong>
+        ＋早押しボーナス
+        <strong>最大500pt</strong>
+      </div>
+
+    </div>
+
+
+    <div class="rule">
+
+      <div class="rule-number">
+        2
+      </div>
+
       <div>
         チームで相談して回答を決定
       </div>
+
     </div>
 
+
     <div class="rule">
-      <div class="rule-number">3</div>
+
+      <div class="rule-number">
+        6
+      </div>
+
+      <div>
+        1問最大
+        <strong>1,000pt</strong>
+      </div>
+
+    </div>
+
+
+    <div class="rule">
+
+      <div class="rule-number">
+        3
+      </div>
+
       <div>
         代表者1名がスマホから回答
       </div>
+
     </div>
 
+
     <div class="rule">
-      <div class="rule-number">4</div>
-      <div>
-        回答時間は各問題 <strong>45秒</strong>
+
+      <div class="rule-number">
+        7
       </div>
-    </div>
 
-    <div class="rule">
-      <div class="rule-number">5</div>
-      <div>
-        正解 <strong>500pt</strong> ＋
-        早押しボーナス <strong>最大500pt</strong>
-      </div>
-    </div>
-
-    <div class="rule">
-      <div class="rule-number">6</div>
-      <div>
-        1問最大 <strong>1,000pt</strong>
-      </div>
-    </div>
-
-    <div class="rule">
-      <div class="rule-number">7</div>
       <div>
         全10問の合計得点で順位決定！
       </div>
+
+    </div>
+
+
+    <div class="rule rule-wide">
+
+      <div class="rule-number">
+        4
+      </div>
+
+      <div>
+        回答時間は各問題
+        <strong>45秒</strong>
+      </div>
+
     </div>
 
   </div>
@@ -555,8 +856,14 @@
 </section>
 
 
-<!-- 練習問題案内 -->
-<section id="practiceIntroScreen" class="screen">
+<!-- ========================================
+     練習問題案内
+======================================== -->
+
+<section
+  id="practiceIntroScreen"
+  class="screen"
+>
 
   <div class="eyebrow">
     PRACTICE
@@ -577,8 +884,14 @@
 </section>
 
 
-<!-- 待機 -->
-<section id="waitingScreen" class="screen active">
+<!-- ========================================
+     待機
+======================================== -->
+
+<section
+  id="waitingScreen"
+  class="screen active"
+>
 
   <div class="waiting-title">
     SCM QUIZ
@@ -595,8 +908,14 @@
 </section>
 
 
-<!-- 問題 -->
-<section id="questionScreen" class="screen">
+<!-- ========================================
+     問題
+======================================== -->
+
+<section
+  id="questionScreen"
+  class="screen"
+>
 
   <div class="question-top">
 
@@ -616,20 +935,24 @@
 
   </div>
 
+
   <div
     id="questionText"
     class="question-text"
   ></div>
+
 
   <div
     id="questionImages"
     class="question-images"
   ></div>
 
+
   <div
     id="choices"
     class="choices"
   ></div>
+
 
   <div
     id="answerCounter"
@@ -641,8 +964,14 @@
 </section>
 
 
-<!-- 正解発表 -->
-<section id="resultScreen" class="screen">
+<!-- ========================================
+     正解
+======================================== -->
+
+<section
+  id="resultScreen"
+  class="screen"
+>
 
   <div class="result-heading">
     正解発表
@@ -666,8 +995,14 @@
 </section>
 
 
-<!-- 中間ランキング -->
-<section id="rankingScreen" class="screen">
+<!-- ========================================
+     中間ランキング
+======================================== -->
+
+<section
+  id="rankingScreen"
+  class="screen"
+>
 
   <div class="ranking-title">
     🏆 中間ランキング 🏆
@@ -681,8 +1016,14 @@
 </section>
 
 
-<!-- 最終結果 -->
-<section id="finalScreen" class="screen">
+<!-- ========================================
+     最終
+======================================== -->
+
+<section
+  id="finalScreen"
+  class="screen"
+>
 
   <div class="final-small">
     FINAL
@@ -701,8 +1042,11 @@
 
 <script type="module">
 
-import { initializeApp }
+import {
+  initializeApp
+}
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 
 import {
   getDatabase,
@@ -713,27 +1057,48 @@ from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
-  authDomain: "scm-quiz-df0e6.firebaseapp.com",
-  databaseURL: "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "scm-quiz-df0e6",
-  storageBucket: "scm-quiz-df0e6.firebasestorage.app",
-  messagingSenderId: "30616205850",
-  appId: "1:30616205850:web:224b6386ee807700d26fa3"
+
+  apiKey:
+    "AIzaSyAVazxROYpygBw0xMhJlhbvrAaF1pmicEc",
+
+  authDomain:
+    "scm-quiz-df0e6.firebaseapp.com",
+
+  databaseURL:
+    "https://scm-quiz-df0e6-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+  projectId:
+    "scm-quiz-df0e6",
+
+  storageBucket:
+    "scm-quiz-df0e6.firebasestorage.app",
+
+  messagingSenderId:
+    "30616205850",
+
+  appId:
+    "1:30616205850:web:224b6386ee807700d26fa3"
+
 };
 
+
 const app =
-  initializeApp(firebaseConfig);
+  initializeApp(
+    firebaseConfig
+  );
+
 
 const database =
   getDatabase(app);
 
 
-/* =========================
+
+/* ========================================
    問題データ
-========================= */
+======================================== */
 
 const questions = {
+
 
   practice: {
 
@@ -1022,73 +1387,116 @@ const questions = {
 };
 
 
-/* =========================
+
+/* ========================================
    DOM
-========================= */
+======================================== */
 
 const screens =
-  document.querySelectorAll(".screen");
+  document.querySelectorAll(
+    ".screen"
+  );
+
 
 const questionScreen =
-  document.getElementById("questionScreen");
+  document.getElementById(
+    "questionScreen"
+  );
+
 
 const questionLabel =
-  document.getElementById("questionLabel");
+  document.getElementById(
+    "questionLabel"
+  );
+
 
 const questionText =
-  document.getElementById("questionText");
+  document.getElementById(
+    "questionText"
+  );
+
 
 const questionImages =
-  document.getElementById("questionImages");
+  document.getElementById(
+    "questionImages"
+  );
+
 
 const choices =
-  document.getElementById("choices");
+  document.getElementById(
+    "choices"
+  );
+
 
 const timer =
-  document.getElementById("timer");
+  document.getElementById(
+    "timer"
+  );
+
 
 const answerCounter =
-  document.getElementById("answerCounter");
+  document.getElementById(
+    "answerCounter"
+  );
+
 
 const correctAnswer =
-  document.getElementById("correctAnswer");
+  document.getElementById(
+    "correctAnswer"
+  );
+
 
 const distribution =
-  document.getElementById("distribution");
+  document.getElementById(
+    "distribution"
+  );
+
 
 const explanation =
-  document.getElementById("explanation");
+  document.getElementById(
+    "explanation"
+  );
+
 
 const rankingList =
-  document.getElementById("rankingList");
+  document.getElementById(
+    "rankingList"
+  );
 
 
-/* =========================
+
+/* ========================================
    状態
-========================= */
+======================================== */
 
 let teams = {};
 
 let scores = {};
 
-let currentQuestionKey = null;
+let currentQuestionKey =
+  null;
 
 let currentAnswers = {};
 
-let unsubscribeAnswers = null;
+let unsubscribeAnswers =
+  null;
 
-let timerInterval = null;
+let timerInterval =
+  null;
 
 
-/* =========================
+
+/* ========================================
    画面切替
-========================= */
+======================================== */
 
 function showScreen(id) {
 
   screens.forEach(
     screen =>
-      screen.classList.remove("active")
+      screen.classList.remove(
+        "active"
+      )
   );
 
 
@@ -1098,37 +1506,51 @@ function showScreen(id) {
 
   if (target) {
 
-    target.classList.add("active");
+    target.classList.add(
+      "active"
+    );
 
   }
 
 }
 
 
-/* =========================
+
+/* ========================================
    チーム
-========================= */
+======================================== */
 
 onValue(
-  ref(database, "teams"),
+
+  ref(
+    database,
+    "teams"
+  ),
 
   snapshot => {
 
     teams =
       snapshot.val() || {};
 
+
     updateAnswerCounter();
 
   }
+
 );
 
 
-/* =========================
+
+/* ========================================
    得点
-========================= */
+======================================== */
 
 onValue(
-  ref(database, "scores"),
+
+  ref(
+    database,
+    "scores"
+  ),
 
   snapshot => {
 
@@ -1136,15 +1558,21 @@ onValue(
       snapshot.val() || {};
 
   }
+
 );
 
 
-/* =========================
+
+/* ========================================
    GAME
-========================= */
+======================================== */
 
 onValue(
-  ref(database, "game"),
+
+  ref(
+    database,
+    "game"
+  ),
 
   snapshot => {
 
@@ -1166,7 +1594,8 @@ onValue(
     /* スライド */
 
     if (
-      game.phase === "slide"
+      game.phase ===
+      "slide"
     ) {
 
       stopTimer();
@@ -1175,7 +1604,8 @@ onValue(
 
 
       if (
-        game.slide === "title"
+        game.slide ===
+        "title"
       ) {
 
         showScreen(
@@ -1186,7 +1616,8 @@ onValue(
 
 
       else if (
-        game.slide === "rules"
+        game.slide ===
+        "rules"
       ) {
 
         showScreen(
@@ -1197,7 +1628,8 @@ onValue(
 
 
       else if (
-        game.slide === "practiceIntro"
+        game.slide ===
+        "practiceIntro"
       ) {
 
         showScreen(
@@ -1215,7 +1647,8 @@ onValue(
     /* 待機 */
 
     if (
-      game.phase === "waiting"
+      game.phase ===
+      "waiting"
     ) {
 
       stopTimer();
@@ -1234,7 +1667,8 @@ onValue(
     /* 問題 */
 
     if (
-      game.phase === "question"
+      game.phase ===
+      "question"
     ) {
 
       currentQuestionKey =
@@ -1268,7 +1702,8 @@ onValue(
     /* 正解 */
 
     if (
-      game.phase === "result"
+      game.phase ===
+      "result"
     ) {
 
       currentQuestionKey =
@@ -1300,7 +1735,8 @@ onValue(
     /* 中間ランキング */
 
     if (
-      game.phase === "ranking"
+      game.phase ===
+      "ranking"
     ) {
 
       stopTimer();
@@ -1308,6 +1744,7 @@ onValue(
       stopAnswerWatch();
 
       renderRanking();
+
 
       showScreen(
         "rankingScreen"
@@ -1321,12 +1758,14 @@ onValue(
     /* 最終 */
 
     if (
-      game.phase === "final"
+      game.phase ===
+      "final"
     ) {
 
       stopTimer();
 
       stopAnswerWatch();
+
 
       showScreen(
         "finalScreen"
@@ -1337,12 +1776,14 @@ onValue(
     }
 
   }
+
 );
 
 
-/* =========================
+
+/* ========================================
    問題表示
-========================= */
+======================================== */
 
 function renderQuestion(key) {
 
@@ -1351,7 +1792,9 @@ function renderQuestion(key) {
 
 
   if (!question) {
+
     return;
+
   }
 
 
@@ -1368,7 +1811,8 @@ function renderQuestion(key) {
 
 
   questionImages.classList.remove(
-    "one-image"
+    "one-image",
+    "two-images"
   );
 
 
@@ -1392,7 +1836,7 @@ function renderQuestion(key) {
   }
 
 
-  if (
+  else if (
     imageList.length === 1
   ) {
 
@@ -1403,11 +1847,23 @@ function renderQuestion(key) {
   }
 
 
+  else {
+
+    questionImages.classList.add(
+      "two-images"
+    );
+
+  }
+
+
   imageList.forEach(
+
     src => {
 
       const img =
-        document.createElement("img");
+        document.createElement(
+          "img"
+        );
 
 
       img.src =
@@ -1418,19 +1874,17 @@ function renderQuestion(key) {
         `${question.label} 問題画像`;
 
 
-      /*
-        画像が読めなかった場合は
-        壊れた画像アイコンを出さない
-      */
-
       img.addEventListener(
+
         "error",
+
         () => {
 
           img.style.display =
             "none";
 
         }
+
       );
 
 
@@ -1439,6 +1893,7 @@ function renderQuestion(key) {
       );
 
     }
+
   );
 
 
@@ -1451,10 +1906,13 @@ function renderQuestion(key) {
 
 
   question.choices.forEach(
+
     (choice, index) => {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       div.className =
@@ -1462,7 +1920,9 @@ function renderQuestion(key) {
 
 
       const letter =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
 
       letter.className =
@@ -1479,9 +1939,11 @@ function renderQuestion(key) {
 
 
       div.appendChild(
+
         document.createTextNode(
           choice
         )
+
       );
 
 
@@ -1490,14 +1952,16 @@ function renderQuestion(key) {
       );
 
     }
+
   );
 
 }
 
 
-/* =========================
+
+/* ========================================
    回答監視
-========================= */
+======================================== */
 
 function watchAnswers(key) {
 
@@ -1528,12 +1992,16 @@ function watchAnswers(key) {
 
 
         if (
+
           document
             .getElementById(
               "resultScreen"
             )
             .classList
-            .contains("active")
+            .contains(
+              "active"
+            )
+
         ) {
 
           renderDistribution(
@@ -1547,6 +2015,7 @@ function watchAnswers(key) {
     );
 
 }
+
 
 
 function stopAnswerWatch() {
@@ -1563,6 +2032,7 @@ function stopAnswerWatch() {
   }
 
 }
+
 
 
 function updateAnswerCounter() {
@@ -1585,9 +2055,10 @@ function updateAnswerCounter() {
 }
 
 
-/* =========================
+
+/* ========================================
    タイマー
-========================= */
+======================================== */
 
 function startSyncedTimer(
   startedAt
@@ -1613,10 +2084,12 @@ function startSyncedTimer(
 
     const elapsed =
       Math.floor(
+
         (
           Date.now() -
           startedAt
         ) / 1000
+
       );
 
 
@@ -1654,6 +2127,7 @@ function startSyncedTimer(
 }
 
 
+
 function stopTimer() {
 
   if (
@@ -1673,9 +2147,10 @@ function stopTimer() {
 }
 
 
-/* =========================
+
+/* ========================================
    正解発表
-========================= */
+======================================== */
 
 function renderResult(key) {
 
@@ -1684,7 +2159,9 @@ function renderResult(key) {
 
 
   if (!question) {
+
     return;
+
   }
 
 
@@ -1693,8 +2170,10 @@ function renderResult(key) {
 
 
   if (
+
     question.correct === null ||
     question.correct === undefined
+
   ) {
 
     correctAnswer.textContent =
@@ -1721,9 +2200,10 @@ function renderResult(key) {
 }
 
 
-/* =========================
+
+/* ========================================
    回答分布
-========================= */
+======================================== */
 
 function renderDistribution(key) {
 
@@ -1732,7 +2212,9 @@ function renderDistribution(key) {
 
 
   if (!question) {
+
     return;
+
   }
 
 
@@ -1743,11 +2225,14 @@ function renderDistribution(key) {
   Object.values(
     currentAnswers
   ).forEach(
+
     answer => {
 
       if (
+
         answer.choice >= 0 &&
         answer.choice <= 3
+
       ) {
 
         counts[
@@ -1757,6 +2242,7 @@ function renderDistribution(key) {
       }
 
     }
+
   );
 
 
@@ -1776,10 +2262,13 @@ function renderDistribution(key) {
 
 
   counts.forEach(
+
     (count, index) => {
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       row.className =
@@ -1793,20 +2282,24 @@ function renderDistribution(key) {
 
 
       row.innerHTML = `
+
         <div class="distribution-letter">
           ${letters[index]}
         </div>
 
         <div class="bar-track">
+
           <div
             class="bar"
             style="width:${percentage}%"
           ></div>
+
         </div>
 
         <div class="distribution-number">
           ${count}
         </div>
+
       `;
 
 
@@ -1815,14 +2308,16 @@ function renderDistribution(key) {
       );
 
     }
+
   );
 
 }
 
 
-/* =========================
+
+/* ========================================
    中間ランキング
-========================= */
+======================================== */
 
 function renderRanking() {
 
@@ -1830,6 +2325,7 @@ function renderRanking() {
     Object.entries(
       teams
     ).map(
+
       ([teamId, team]) => {
 
         const teamScores =
@@ -1840,12 +2336,15 @@ function renderRanking() {
           Object.values(
             teamScores
           ).reduce(
+
             (sum, value) =>
               sum +
               Number(
                 value || 0
               ),
+
             0
+
           );
 
 
@@ -1860,12 +2359,15 @@ function renderRanking() {
         };
 
       }
+
     );
 
 
   ranking.sort(
+
     (a, b) =>
       b.total - a.total
+
   );
 
 
@@ -1874,10 +2376,13 @@ function renderRanking() {
 
 
   ranking.forEach(
+
     (team, index) => {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       div.className =
@@ -1885,30 +2390,42 @@ function renderRanking() {
 
 
       const position =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       position.className =
         "ranking-position";
+
 
       position.textContent =
         `${index + 1}位`;
 
 
       const name =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       name.className =
         "ranking-name";
+
 
       name.textContent =
         team.name;
 
 
       const score =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       score.className =
         "ranking-score";
+
 
       score.textContent =
         `${team.total.toLocaleString()} pt`;
@@ -1918,9 +2435,11 @@ function renderRanking() {
         position
       );
 
+
       div.appendChild(
         name
       );
+
 
       div.appendChild(
         score
@@ -1932,6 +2451,7 @@ function renderRanking() {
       );
 
     }
+
   );
 
 }
